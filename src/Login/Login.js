@@ -43,8 +43,8 @@ export default function Login() {
               </div>
             </div>
           </div>
-          <footer>
-            <p style={{ textAlign: 'center', marginTop: '3.6vh', color: 'white' }}>&copy; 2021 American MuscleCar.com</p>
+          <footer className="footer navbar-fixed-bottom text-center">
+            <p style={{ textAlign: 'center', marginTop: '1vh', color: 'white' }}>&copy; 2021 American MuscleCar.com</p>
           </footer>
         </div>
       </section>
