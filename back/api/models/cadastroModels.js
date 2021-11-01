@@ -10,7 +10,7 @@ function getAllCadastro(callback) {
     conexao.query(`select * from cadastro`, callback);
 }
 
-function postCadastro(customer, callback) {
+function postCadastro(callback) {
   const m_sql = 'INSERT INTO cadastro (nome, logradouro, numero, bairro, cidade, estado, cep, rg, cpf, nascimento, fixo, celular, civil, marca, modelo, cor, ano, placa, km) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'; 
   conexao.query(m_sql, callback);
 }
