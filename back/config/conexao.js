@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const database = 'cadastro';
+const database = 'cliente';
 
 // instanciar objeto de acesso ao banco de dados
 const conexao = mysql.createConnection({
