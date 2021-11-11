@@ -1,36 +1,40 @@
-const cadastroModels = require('../models/cadastroModels.js');
+//const userModels = require('../models/userModels.js');
+const db = require('../../config/db')
 
 module.exports = {
-  cadastroMenu,
   cadastroGetAll,
-  cadastroPost
+  cadastroInsert
 }
 
-function cadastroMenu(req, res) {
-  console.log('Rota Cadastro Encontrada!');
-  res.json('Rota Cadastro Encontrada!');
-};
+function cadastroGetAll(require, response) {
+  console.log("Rota Cadastro Encontrada!!!");
+  const sqlGet = "SELECT * FROM cadastro";
+  db.query(sqlGet, (err, result) => {
+    if(err) {
+      throw err
+    } else {
+      response.send(result)
+    }
+  })
+}
 
-function cadastroGetAll(req, res) {
-  console.log('Listar Cadastro { M O D E L S }!');
-  //res.json('Listar Usuario { M O D E L S }!')
-  cadastroModels.getAllCadastro(function (err, resposta) {
-    console.log(`Retorno de Cadastro { M O D E L S }`);
+function cadastroInsert(require, response) {
+  console.log("Rota Cadastro Insert Encontrada!!!");
+  //response.json("Rota Insert Encontrada!!!")
+
+  const nome = require.body.nome;
+  const email = require.body.email;
+  const senha = require.body.senha;
+  const cidade = require.body.cidade;
+  const estado = require.body.estado;
+  const cep = require.body.cep;
+  const celular = require.body.celular;
+
+  const sqlInsert = "INSERT INTO cadastro (nome,email,senha,cidade,estado,cep,celular) VALUES (?,?,?,?,?,?,?)";
+  db.query(sqlInsert, [nome, email, senha, cidade, estado, cep, celular], (err, result) => {
     if (err) {
       throw err;
-    } else {
-      res.json(resposta);
     }
+     response.json(result)
   })
 }
-
-function cadastroPost(req, res) {
-  cadastroModels.postCadastro((err, resposta) => {
-    if(err) {
-      throw err;
-    } else {
-      res.json(resposta)
-    }
-  })
-}
-

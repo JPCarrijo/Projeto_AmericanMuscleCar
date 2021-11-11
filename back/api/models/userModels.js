@@ -1,12 +1,9 @@
-const conexao = require('../../config/conexao.js');
+const db = require('../../config/db')
 
 module.exports = {
   getAllUser,
-    //postCadastro
 }
 
 function getAllUser(callback) {
-    conexao.query(`select * from users`, callback);
+  db.query(`select * from users`, callback);
 }
-
-//function postCadastro()

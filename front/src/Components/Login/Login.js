@@ -1,17 +1,23 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import cars from '../../img/musclecars.png';
-//import '../../../back/server'
-export default class Login extends Component {
-//  async componentDidMount() {
-//    console.log("Executando DidMount..");
-//    const response = await fetch('http://localhost:3001/user/listar');
-//    const data = await response.json();
-//    console.log(data);
-//  }
+import axios from 'axios';
+
+export default function Login() {
+
+const [usuario, setUsuario] = useState('');
+const [senha, setSenha] = useState('');
 
 
-  render() {
+const handleSubmit = () => {
+      axios.post("http://localhost:3001/insert/users", {
+      nomeUsuario: usuario,
+      senhaUsuario: senha,
+  }).then(() => {
+    alert("Successful Insert!")
+  })
+}
+
     return (
       <>
         <section className="vh-100" style={{ backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>
@@ -34,16 +40,16 @@ export default class Login extends Component {
                           <span className="h1 fw-bold mb-0" style={{ fontFamily: 'Permanent Marker' }}> American MuscleCar </span>
                         </div>
                         <div className="form-outline mb-4">
-                          <input type="text" id="usuario" className="form-control form-control-lg" style={{ width: '27vw' }} name="" value="" onChange=""/>
+                          <input type="text" id="usuario" className="form-control form-control-lg" style={{ width: '27vw' }} name="usuario" onChange={(e) => setUsuario(e.target.value)}/>
                           <label className="form-label" for="form2Example17"> Nome Usuário </label>
                         </div>
 
                         <div className="form-outline mb-4">
-                          <input type="password" id="senha" className="form-control form-control-lg" style={{ width: '27vw' }} name="" value="" onChange=""/>
+                          <input type="password" id="senha" className="form-control form-control-lg" style={{ width: '27vw' }} name="senha" onChange={(e) => setSenha(e.target.value)}/>
                           <label className="form-label" for="form2Example27"> Senha </label>
                         </div>
                         <div className="pt-1 mb-4">
-                          <Link to="/home"><button className="btn btn-dark btn-lg btn-block" type="submit" style={{ width: '5.9vw', padding: '2px' }}> Login </button></Link>
+                          <button className="btn btn-dark btn-lg btn-block" type="submit" style={{ width: '5.9vw', padding: '2px' }} onClick={handleSubmit}> Login </button>
                         </div>
                         <Link className="small text-muted" to="/recuperar">Esqueceu a senha?</Link>
                         <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>Não tem uma conta? <Link to="/cadastro" style={{ color: '#393f81' }}>Registre agora.</Link></p>
@@ -61,4 +67,3 @@ export default class Login extends Component {
       </>
     )
   }
-}

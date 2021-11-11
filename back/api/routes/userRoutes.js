@@ -4,3 +4,4 @@ server.get('/user', controllersUser.userMenu);
 
 server.get('/user/listar', controllersUser.userGetAll);
 
+server.post('/insert/users', controllersUser.userInsert);
