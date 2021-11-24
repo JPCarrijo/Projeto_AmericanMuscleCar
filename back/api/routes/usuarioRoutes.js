@@ -6,3 +6,5 @@ server.get('/usuario', controllersUsuario.usuarioCadastro);
 server.get('/usuario/listar', controllersUsuario.usuarioGetAll);
 
 server.post('/usuario/insert', controllersUsuario.usuarioInsert);
+
+server.get('/usuario/localizar', controllersUsuario.usuarioLocalizar);

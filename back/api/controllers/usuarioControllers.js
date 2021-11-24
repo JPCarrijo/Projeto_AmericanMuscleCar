@@ -4,7 +4,8 @@ const db = require('../../config/db')
 module.exports = {
   usuarioCadastro,
   usuarioGetAll,
-  usuarioInsert
+  usuarioInsert,
+  usuarioLocalizar
 }
 
 function usuarioCadastro(require, response) {
@@ -14,7 +15,7 @@ function usuarioCadastro(require, response) {
 
 function usuarioGetAll(require, response) {
   
-  const sqlGet = "SELECT * FROM usuario";
+  const sqlGet = `SELECT * FROM usuario `;
   db.query(sqlGet, (err, result) => {
     if(err) {
       throw err;
@@ -46,5 +47,15 @@ function usuarioInsert(require, response) {
       throw err;
     }
      response.json(result)
+  })
+}
+
+function usuarioLocalizar(require, response) {
+  const text = require.params.nome
+  console.log(text);
+  const sqlGet = `SELECT * FROM usuario where nome = ${text}`;
+  db.query(sqlGet, text, (err, result) => {
+    if(err) throw err
+    response.send(result)  
   })
 }

@@ -9,6 +9,7 @@ http.createServer(servidor).listen(servidor.get('porta'), function() {
 
 const express = require("express");
 const consign = require("consign");
+//const moment = require("moment")
 const cors = require("cors");
 
 // Iniciando o Servidor Express
@@ -43,6 +44,8 @@ server.post("/insert", (req, res) => {
 */
 server.listen(port, function() {
   console.log(`Servidor rodando na porta ${port}`);
+  //let data = moment().format(`DD/MM/YYYY`)
+  //console.log(data);
 })
 
 //module.exports = server;

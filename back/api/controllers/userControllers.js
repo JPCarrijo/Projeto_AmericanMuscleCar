@@ -2,17 +2,11 @@ const userModels = require('../models/userModels.js');
 const db = require('../../config/db')
 
 module.exports = {
-  userMenu,
   userGetAll,
-  userInsert
+  userLogin
 }
 
-function userMenu(req, res) {
-  console.log('Rota User Encontrada!');
-  res.json('Rota User Encontrada!');
-};
-
-function userGetAll(req, res) {
+function userGetAll(require, response) {
   console.log('Listar Users { M O D E L S }!');
 
   const sqlGet = "SELECT * FROM  users"
@@ -20,22 +14,29 @@ function userGetAll(req, res) {
     if (err) {
       throw err;
     } else {
-      res.send(result);
+      response.send(result);
     }
   });
 }
 
-  function userInsert(req, res) {
-    console.log("Rota Insert User Encontrada!");
+function userLogin(require, response) {
+  console.log("Rota Insert User Encontrada!");
 
-    const nome = req.body.nomeUsuario;
-    const senha = req.body.emailUsuario;
-    const sqlInsert = "INSERT INTO users (nomeUsuario, senha)VALUES (?,?)";
-    db.query(sqlInsert, [nome, senha], (err, result) => {
-      if (err) {
-        throw err;
-      } else {
-        res.json(result);
-      }
-    })
-  }
+  const nome = require.body.nomeUsuario;
+  const senha = require.body.senhaUsuario;
+  console.log(nome)
+  console.log(senha)
+
+  const sqlInsert = "SELECT * FROM cadastro WHERE nome = ? AND senha = ?";
+  db.query(sqlInsert, [nome, senha], (err, result) => {
+    if (err) {
+      response.send({ err: err });
+    }
+    if (result.length > 0) {
+      response.send(result);
+      console.log(result);
+    } else {
+      response.send({ message: `Usuário/Senha não encontrado!` })
+    }
+  })
+}

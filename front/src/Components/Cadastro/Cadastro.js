@@ -4,6 +4,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputMask from 'react-input-mask';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
+import MuiAlert from '@material-ui/core/Alert';
+import { Snackbar } from '@material-ui/core';
 
 const formatChars = {
 
@@ -40,6 +43,14 @@ export default function Cadastro() {
     cep: '',
     celular: '',
   })
+
+  const [snack, setSnack] = useState({
+    open: false,
+    severity: 'success',
+    message: 'Usuário salvo com sucesso.'
+  })
+
+  const history = useHistory()
 
   function handleInputChange(event, property) {
     event.preventDefault()
@@ -97,7 +108,7 @@ export default function Cadastro() {
       isValid = false
     }
 
-    if (data.cep.trim() === '' || data.celular.includes('_')) {
+    if (data.cep.trim() === '' || data.cep.includes('_')) {
       errorTemp.cep = `O CEP deve ser preenchido!`
       isValid = false
     }
@@ -112,46 +123,85 @@ export default function Cadastro() {
   }
 
   function saveData() {
-
-    axios.post("http://localhost:3001/cadastro/insert", {
-      nome: cadastro.nome,
-      email: cadastro.email,
-      senha: cadastro.senha,
-      cidade: cadastro.cidade,
-      estado: cadastro.estado,
-      cep: cadastro.cep,
-      celular: cadastro.celular,
-    }).then(() => {
-      alert("Successful Insert!")
-    })
-  }
-
-  function handleChange() {
-    if (validate(cadastro)) {
-      saveData()
+    try {
+      axios.post("http://localhost:3001/cadastro/insert", {
+        nome: cadastro.nome,
+        email: cadastro.email,
+        senha: cadastro.senha,
+        cidade: cadastro.cidade,
+        estado: cadastro.estado,
+        cep: cadastro.cep,
+        celular: cadastro.celular,
+      })
+      setSnack({
+        open: true,
+        severity: 'success',
+        message: 'Usuário salvo com sucesso!'
+      })
+    }
+    catch (error) {
+      setSnack({
+        open: true,
+        severity: 'error',
+        message: 'ERRO: ' + error.message
+      })
     }
   }
 
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  function handleSnack(event, reason) {
+    if (reason === 'clickway') return
+    setSnack({ ...snack, open: false })
+    history.push('/')
+  }
   return (
     <>
-      <section className="container-fluid h-100 d-inline-block" style={{ paddingTop: '11.5vh', paddingBottom: '10.2vh', backgroundColor: 'rgba(6, 36, 21, 0.78)', height: '100%' }}>
-        <div className="container py-5 h-100" >
-          <div className="row d-flex justify-content-center align-items-center h-100" >
-            <div className="col col-xl-12" >
-              <div className="card" style={{ borderRadius: '1rem', boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)', backgroundColor: '  rgba(350, 240, 190, 0.75)', padding: '5vw' }}>
+      <Snackbar
+        open={snack.open}
+        autoHideDuration={6000}
+        onClose={handleSnack}
+      >
+        <Alert
+          onClose={handleSnack}
+          severity={snack.severity}>
+          {snack.message}
+        </Alert>
+      </Snackbar>
+      <section
+        className="container-fluid h-100 d-inline-block"
+        style={{ paddingTop: '11.5vh', paddingBottom: '10.2vh', backgroundColor: 'rgba(6, 36, 21, 0.78)', height: '100%' }}>
+        <div
+          className="container py-5 h-100" >
+          <div
+            className="row d-flex justify-content-center align-items-center h-100" >
+            <div
+              className="col col-xl-12" >
+              <div
+                className="card"
+                style={{ borderRadius: '1rem', boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)', backgroundColor: '  rgba(350, 240, 190, 0.75)', padding: '5vw' }}>
                 {/* Nav */}
-                <h1 className="col-md-12 text-center h1" style={{ fontFamily: 'Permanent Marker', fontSize: '40pt', textAlign: 'center', marginTop: '-25px' }}> American MuscleCar
+                <h1
+                  className="col-md-12 text-center h1"
+                  style={{ fontFamily: 'Permanent Marker', fontSize: '40pt', textAlign: 'center', marginTop: '-25px' }}> American MuscleCar
                 </h1>
                 <form >
-                  <div className="form-group">
-                    <div className="row">
-                      <div className="col-md-12" style={{ marginTop: '5vh' }} >
+                  <div
+                    className="form-group">
+                    <div
+                      className="row">
+                      <div
+                        className="col-md-12"
+                        style={{ marginTop: '5vh' }} >
                         <TextField
                           id="nome"
                           label="Nome"
                           name="nome"
                           variant="standard"
                           value={cadastro.nome}
+                          InputProps={{ style: { fontSize: '17pt' } }}
                           onChange={handleInputChange}
                           fullWidth
                           required
@@ -162,13 +212,16 @@ export default function Cadastro() {
                         <label for="inputAddress2" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}> Nome </label>
                         <input type="text" className="form-control" id="inputAddress2" name="nome" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
-                      <div className="col-md-8" style={{ marginTop: '5vh' }}>
+                      <div
+                        className="col-md-8"
+                        style={{ marginTop: '5vh' }}>
                         <TextField
                           id="email"
                           label="E-mail"
                           name="email"
                           variant="standard"
                           value={cadastro.email}
+                          InputProps={{ style: { fontSize: '17pt' } }}
                           onChange={event => handleInputChange(event, 'email')}
                           fullWidth
                           required
@@ -179,13 +232,16 @@ export default function Cadastro() {
                         <label for="inputEmail4" style={{ fontWeight: 'bolder', fontStyle: 'oblique' }}> Email </label>
                         <input type="email" className="form-control" id="inputEmail4" name="email" placeholder="admi@americanmusclecar.com" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
-                      <div className="col-md-4" style={{ marginTop: '5vh' }}>
+                      <div
+                        className="col-md-4"
+                        style={{ marginTop: '5vh' }}>
                         <TextField
                           id="senha"
                           label="Senha"
                           name="senha"
                           variant="standard"
                           value={cadastro.senha}
+                          InputProps={{ style: { fontSize: '17pt' } }}
                           onChange={handleInputChange}
                           fullWidth
                           required
@@ -196,13 +252,16 @@ export default function Cadastro() {
                         <label for="inputPassword4" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}>Senha</label>
                         <input type="password" className="form-control" id="inputPassword4" placeholder="Mínimo 1 letra + números" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
-                      <div className="col-md-3" style={{ marginTop: '5vh' }}>
+                      <div
+                        className="col-md-3"
+                        style={{ marginTop: '5vh' }}>
                         <TextField
                           id="cidade"
                           label="Cidade"
                           name="cidade"
                           variant="standard"
                           value={cadastro.cidade}
+                          InputProps={{ style: { fontSize: '17pt' } }}
                           onChange={handleInputChange}
                           fullWidth
                           required
@@ -213,13 +272,16 @@ export default function Cadastro() {
                         <label for="inputCity" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}>Cidade</label>
                         <input type="text" className="form-control" id="inputCity" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
-                      <div className="col-md-3" style={{ marginTop: '5vh' }}>
+                      <div
+                        className="col-md-3"
+                        style={{ marginTop: '5vh' }}>
                         <TextField
                           id="estado"
                           label="Estado"
                           variant="standard"
                           name="estado"
                           value={cadastro.estado}
+                          InputProps={{ style: { fontSize: '17pt' } }}
                           onChange={event => handleInputChange(event, 'estado')}
                           select
                           fullWidth
@@ -261,7 +323,9 @@ export default function Cadastro() {
                           <option> São Paulo </option>
                       </select>*/}
                       </div>
-                      <div className="col-md-3" style={{ marginTop: '5vh' }}>
+                      <div
+                        className="col-md-3"
+                        style={{ marginTop: '5vh' }}>
                         <InputMask
                           formatChars={formatChars}
                           mask={cepMask}
@@ -273,6 +337,7 @@ export default function Cadastro() {
                             variant="standard"
                             fullWidth
                             name="cep"
+                            InputProps={{ style: { fontSize: '17pt' } }}
                             required
                             error={error.cep !== ''}
                             helperText={error.cep} />}
@@ -281,7 +346,9 @@ export default function Cadastro() {
                         <label for="inputCEP" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}> CEP </label>
                         <input type="text" className="form-control" id="inputCEP" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
-                      <div className="col-md-3" style={{ marginTop: '5vh' }}>
+                      <div
+                        className="col-md-3"
+                        style={{ marginTop: '5vh' }}>
                         <InputMask
                           formatChars={formatChars}
                           mask={celularMask}
@@ -293,6 +360,7 @@ export default function Cadastro() {
                             variant="standard"
                             fullWidth
                             name="celular"
+                            InputProps={{ style: { fontSize: '17pt' } }}
                             required
                             error={error.celular !== ''}
                             helperText={error.celular} />}
@@ -302,12 +370,33 @@ export default function Cadastro() {
                         <input type="text" className="form-control" id="inputCity" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
                     </div>
-                    <div className="row" style={{ marginTop: '5vh' }}>
-                      <div className="col-md-6 d-grid gap-3 d-md-flex justify-content-start" >
-                      <Link to="/"><button type="button" class="btn btn-dark me-md-6 btn-lg" name="buttonVoltar" style={{ fontStyle: 'oblique', fontWeight: 'bold' }}> Voltar </button></Link>
+                    <div
+                      className="row"
+                      style={{ marginTop: '5vh' }}>
+                      <div
+                        className="col-md-6 d-grid gap-3 d-md-flex justify-content-start" >
+                        <Link
+                          to="/">
+                          <button
+                            type="button"
+                            className="btn btn-dark me-md-6 btn-lg" name="buttonVoltar"
+                            style={{ fontStyle: 'oblique', fontWeight: 'bold' }}> Voltar </button></Link>
                       </div>
-                      <div className="col-md-6 d-grid gap-3 d-md-flex justify-content-end" >
-                        <button type="button" class="btn btn-dark me-md-6 btn-lg" name="buttonCarro" style={{ fontStyle: 'oblique', fontWeight: 'bold' }} onClick={handleChange}> Salvar </button>
+                      <div
+                        className="col-md-6 d-grid gap-3 d-md-flex justify-content-end" >
+                        <button
+                          type="button"
+                          className="btn btn-dark me-md-6 btn-lg" name="buttonCarro"
+                          style={{ fontStyle: 'oblique', fontWeight: 'bold' }}
+                          //data-toggle="modal"
+                          //data-target="#siteModal"
+                          onClick={() => {
+                            if (validate(cadastro)) {
+                              saveData()
+                              //history.push('/')
+                            }
+                          }
+                          }> Salvar </button>
                       </div>
                     </div>
                   </div>
@@ -320,6 +409,46 @@ export default function Cadastro() {
       <footer className="footer navbar-fixed-bottom text-center">
         <p style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 American MuscleCar.com</p>
       </footer>
+      {/* MODAL */}
+      <div
+        className="modal fade"
+        id="siteModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        ria-hidden="true">
+        <div
+          className="modal-dialog modal-dialog-centered" role="document"  >
+          <div
+            className="modal-content" >
+            <div
+              className="modal-header"
+              style={{ backgroundColor: 'rgba(6, 36, 21, 0.65)', fontFamily: 'Permanent Marker', color: 'white' }}>
+              <h4
+                className="modal-title h4"
+                id="exampleModalLongTitle" > American MuscleCar </h4>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"><span>&times;</span></button>
+            </div>
+            <div
+              className="modal-body " style={{ fontFamily: 'Kanit' }} >
+              Usuário salvo com sucesso!
+            </div>
+            <div
+              className="modal-footer"
+              style={{ backgroundColor: 'rgba(6, 36, 21, 0.65)', color: 'white' }}>
+              <button
+                type="button"
+                className="btn btn-dark"
+                data-dismiss="modal"
+                style={{ fontStyle: 'oblique', fontWeight: 'bold' }}> Fechar </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

@@ -20,7 +20,7 @@ export default function Home() {
             <Link style={{ textDecoration: 'none', color: 'black' }} to="/cliente2"><div className="card" style={{ border: 'none', borderRadius: '30px', minWidth: '15vw', width: '22vw' }}>
               <img src={Cadastro} className="card-img-top" alt="..." style={{ borderRadius: '30px' }} />
               <div className="card-body" >
-                <h2 className=" h2 card-title text-center" > Cadastro </h2>
+                <h1 className=" h1 card-title text-center" style={{fontFamily: 'Permanent Marker'}}> Cadastro </h1>
               </div>
             </div></Link>
           </div>
@@ -28,39 +28,39 @@ export default function Home() {
             <Link style={{ textDecoration: 'none', color: 'black' }} to="/servico2"><div className="card" style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
               <img src={Servico} className="card-img-top" alt="..." style={{ borderRadius: '30px' }} />
               <div className="card-body">
-                <h2 className="h2 card-title text-center"> Serviços </h2>
+                <h1 className="h1 card-title text-center" style={{fontFamily: 'Permanent Marker'}}> Serviço </h1>
               </div>
             </div></Link>
           </div>
           <div className="col-md-4 my-5" >
-            <Link style={{ textDecoration: 'none', color: 'black' }}><div className="card" style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to="/agendamento"><div className="card" style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
               <img src={Agenda} className="card-img-top" alt="..." style={{ borderRadius: '30px' }} />
               <div className="card-body">
-                <h2  className=" h2 card-title text-center"> Agendamentos </h2>
+                <h1  className=" h1 card-title text-center" style={{fontFamily: 'Permanent Marker'}}> Agendamento </h1>
               </div>
             </div></Link>
           </div>
           <div className="col-md-4 my-5">
-            <Link style={{ textDecoration: 'none', color: 'black' }}><div className="card" style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} ><div className="card" style={{ border: 'none', borderRadius: '30px', width: '22vw' }} >
               <img src={Nota} className=" h2 card-img-top" alt="..." style={{ borderRadius: '30px' }} />
               <div className="card-body">
-                <h2 className="card-title text-center"> Notas Fiscais </h2>
+                <h1 className="h1 card-title text-center" style={{fontFamily: 'Permanent Marker'}}> Nota Fiscal </h1>
               </div>
             </div></Link>
           </div>
           <div className="col-md-4 my-5">
-            <Link style={{ textDecoration: 'none', color: 'black' }}><div className="card" style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to="/relatorio"><div className="card" style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
               <img src={Relatorio} className="card-img-top" alt="..." style={{ borderRadius: '30px' }} />
               <div className="card-body">
-                <h2 className="h2 card-title text-center"> Relatórios </h2>
+                <h1 className="h1 card-title text-center" style={{fontFamily: 'Permanent Marker'}}> Relatório </h1>
               </div>
             </div></Link>
           </div>
           <div className="col-md-4 my-5">
-            <Link style={{ textDecoration: 'none', color: 'black' }}><div className="card" style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to="/sobre"><div className="card" style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
               <img src={Sobre} className="card-img-top" alt="..." style={{ borderRadius: '30px' }} />
               <div className="card-body">
-                <h2 className=" h2 card-title text-center"> Sobre Nós </h2>
+                <h1 className=" h1 card-title text-center" style={{fontFamily: 'Permanent Marker'}}> Quem Somos </h1>
               </div>
             </div></Link>
           </div>

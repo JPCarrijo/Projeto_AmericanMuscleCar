@@ -8,8 +8,10 @@ module.exports = {
 
 function cadastroGetAll(require, response) {
   console.log("Rota Cadastro Encontrada!!!");
-  const sqlGet = "SELECT * FROM cadastro";
-  db.query(sqlGet, (err, result) => {
+  const id = require.params.id
+  console.log(id);
+  const sqlGet = `SELECT nome, senha FROM cadastro where id = ${id}`;
+  db.query(sqlGet, [id], (err, result) => {
     if(err) {
       throw err
     } else {
