@@ -2,20 +2,27 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import cars from '../../img/musclecars.png';
 import TextField from '@material-ui/core/TextField';
+import { FormControl, InputLabel, Input, FilledInput, InputAdornment, IconButton } from '@material-ui/core';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 export default function Login() {
 
   const [usuario, setUsuario] = useState("");
-  const [senha, setSenha] = useState("");
+  const [value, setValue] = useState({
+    password: '',
+    showPassword: false,
+  });
   const [loginStatus, setLoginStatus] = useState("");
+
   const history = useHistory()
 
 
   const handleSubmit = async () => {
     await axios.post("http://localhost:3001/login/users", {
       nomeUsuario: usuario,
-      senhaUsuario: senha,
+      senhaUsuario: value.password,
     }).then(response => {
       if (response.data.message) {
         setLoginStatus(response.data.message)
@@ -24,6 +31,22 @@ export default function Login() {
       }
     })
   }
+
+  const handleChange = (prop) => (event) => {
+    setValue({ ...value, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValue({
+      ...value,
+      showPassword: !value.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
 
   return (
     <>
@@ -50,7 +73,7 @@ export default function Login() {
                     />
                   </div>
                   <div
-                    className="col-md-6 col-lg-7 d-flex align-items-center">
+                    className="col-md-6 col-lg-7 d-flex align-items-center" style={{ marginTop: '3vh' }}>
                     <form >
                       <div
                         className="d-flex align-items-center mb-3 pb-1">
@@ -64,31 +87,57 @@ export default function Login() {
                       <div
                         className="row">
                         <div
-                          className="col-md-12">
-                          <TextField
-                            id="nome"
-                            label="Usuário"
-                            variant="standard"
-                            InputProps={{ style: { fontSize: '17pt' } }}
-                            name="nome"
-                            onChange={(e) => setUsuario(e.target.value)}
-                            fullWidth
-                          />
+                          className="col-md-12"
+                          style={{ marginTop: '2vh' }}>
+                          <FormControl sx={{ width: '45ch' }} variant="standard">
+                            <TextField
+                              id="nome"
+                              label="Usuário"
+                              variant="standard"
+                              InputProps={{ style: { fontSize: '17pt' } }}
+                              name="nome"
+                              onChange={(e) => setUsuario(e.target.value)}
+                              fullWidth
+                            />
+                          </FormControl>
                         </div>
-                        <div className="col-md-12">
-                          <TextField
-                            id="senha"
-                            label="Senha"
-                            variant="standard"
-                            InputProps={{ style: { fontSize: '17pt' } }}
-                            name="senha"
-                            onChange={(e) => setSenha(e.target.value)}
-                            fullWidth
-                          />
+                        <div
+                          className="col-md-12"
+                          style={{ marginTop: '2vh' }}>
+                          <FormControl
+                            sx={{ width: '25ch' }} variant="standard"
+                          >
+                            <InputLabel
+                              htmlFor="standard-adornment-password"
+                            > Senha
+                            </InputLabel>
+                            <Input
+                              id="standard-adornment-password"
+                              type={value.showPassword ? 'text' : 'password'}
+                              value={value.password}
+                              onChange={handleChange('password')}
+                              endAdornment={
+                                <InputAdornment
+                                  position="end"
+                                >
+
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                  >
+                                    {value.showPassword ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>}
+                            />
+                          </FormControl>
                         </div>
                       </div>
                       <div >
-                       <h4 className="h4" style={{fontFamily:'Kanit', marginTop:'3vh', color:'red'}}> {loginStatus} </h4>
+                        <h4
+                          lassName="h4"
+                          style={{ fontFamily: 'Kanit', marginTop: '3vh', color: 'red' }}> {loginStatus} </h4>
                       </div>
                       <div
                         className="pt-1 mb-4">
@@ -96,7 +145,7 @@ export default function Login() {
                           type="button"
                           className="btn btn-dark me-md-6 btn-lg" name="buttonLogin"
                           style={{ fontStyle: 'oblique', fontWeight: 'bold', marginTop: '3vh' }}
-                          onClick={handleSubmit}                        
+                          onClick={handleSubmit}
                         > Login </button>
                       </div>
                       <h6
@@ -122,48 +171,6 @@ export default function Login() {
           </footer>
         </div>
       </section>
-
-      {/* MODAL */}
-      <div
-        className="modal fade"
-        id="siteModal"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        ria-hidden="true">
-        <div
-          className="modal-dialog modal-dialog-centered" role="document"  >
-          <div
-            className="modal-content" >
-            <div
-              className="modal-header"
-              style={{ backgroundColor: 'rgba(6, 36, 21, 0.65)', fontFamily: 'Permanent Marker', color: 'white' }}>
-              <h4
-                className="modal-title h4"
-                id="exampleModalLongTitle" > American MuscleCar </h4>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"><span>&times;</span></button>
-            </div>
-            <div
-              className="modal-body "
-              style={{ fontFamily: 'Kanit', backgroundColor: 'rgba(6, 36, 21, 0.2)' }}>
-              <h2> {loginStatus} </h2>
-            </div>
-            <div
-              className="modal-footer"
-              style={{ backgroundColor: 'rgba(6, 36, 21, 0.65)', color: 'white' }}>
-              <button
-                type="button"
-                className="btn btn-dark"
-                data-dismiss="modal"
-                style={{ fontStyle: 'oblique', fontWeight: 'bold' }}> Fechar </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   )
 }

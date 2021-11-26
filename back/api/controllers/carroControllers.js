@@ -8,10 +8,10 @@ module.exports = {
 
 function carroCadastro(require, response) {
   console.log("Rota Carro Encontrada!!!");
-  const id = require.params.id
-  const sqlGet = `SELECT marca, modelo FROM carro where carroId = ${id}`
-  console.log(`Este é a placa: ${id}`);
-  db.query(sqlGet, [id], (err, result) => {
+  //const id = require.params.id
+  const sqlGet = `SELECT * FROM carro `
+  //console.log(`Este é a placa: ${id}`);
+  db.query(sqlGet, (err, result) => {
     if(err) {
       throw err
     } else {

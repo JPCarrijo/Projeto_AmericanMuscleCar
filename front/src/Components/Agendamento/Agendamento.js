@@ -5,6 +5,8 @@ import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
+import MuiAlert from '@material-ui/core/Alert';
+import { Snackbar } from '@material-ui/core';
 
 
 const formatChars = {
@@ -37,6 +39,12 @@ export default function Agendamento() {
     marca: '',
     modelo: '',
     ano: ''
+  })
+
+  const [snack, setSnack] = useState({
+    open: false,
+    severity: 'success',
+    message: 'Agendamento salvo com sucesso.'
   })
 
   const handleChange = (e, property) => {
@@ -99,7 +107,6 @@ export default function Agendamento() {
     setError(errorTemp)
     return isValid
   }
-
   const years = () => {
     const result = []
     for (let i = (new Date()).getFullYear(); i >= 1970; i--)  result.push(i)
@@ -108,17 +115,38 @@ export default function Agendamento() {
   }
 
   const saveAgendamento = async () => {
-    await axios.post(`http://localhost:3001/agenda/insert`, {
-      data: agenda.data,
-      nome: agenda.nome,
-      cpf: agenda.cpf,
-      email: agenda.email,
-      marca: agenda.marca,
-      modelo: agenda.modelo,
-      ano: agenda.ano
-    }).then(() => {
-      alert(`Successful!!!`)
-    })
+    try {
+      await axios.post(`http://localhost:3001/agenda/insert`, {
+        data: agenda.data,
+        nome: agenda.nome,
+        cpf: agenda.cpf,
+        email: agenda.email,
+        marca: agenda.marca,
+        modelo: agenda.modelo,
+        ano: agenda.ano
+      })
+      setSnack({
+        open: true,
+        severity: 'success',
+        message: 'Agendamento salvo com sucesso!'
+      })
+    }
+    catch (error) {
+      setSnack({
+        open: true,
+        severity: 'error',
+        message: 'ERRO: ' + error.message
+      })
+    }
+  }
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  function handleSnack(event, reason) {
+    if (reason === 'clickway') return
+    setSnack({ ...snack, open: false })
   }
 
   const handleAgenda = () => {
@@ -136,8 +164,6 @@ export default function Agendamento() {
     }
   }
 
-
-
   useEffect(() => {
     fetch(`http://localhost:3001/agenda/listar`)
       .then((response) => response.json())
@@ -149,9 +175,19 @@ export default function Agendamento() {
     document.getElementById('nav-home-tab').click()
   }
 
-  console.log(evento)
   return (
     <>
+      <Snackbar
+        open={snack.open}
+        autoHideDuration={6000}
+        onClose={handleSnack}
+      >
+        <Alert
+          onClose={handleSnack}
+          severity={snack.severity}>
+          {snack.message}
+        </Alert>
+      </Snackbar>
       <section className="container-fluid h-100 d-inline-block" style={{ paddingTop: '11.5vh', paddingBottom: '10.9vh', backgroundColor: 'rgba(6, 36, 21, 0.78)', height: '100%' }}>
         <div className="container py-5 h-100" >
           <div className="row d-flex justify-content-center align-items-center h-100" >
@@ -310,7 +346,6 @@ export default function Agendamento() {
                                   <th scope="col"> Marca </th>
                                   <th scope="col"> Modelo </th>
                                   <th scope="col"> Ano </th>
-                                  {/*} <th scope="col" style={{}}><a type="button" href="/autores/novo" className="btn btn-secondary btn-lg btn-block" role="button"> Novo Autor </a></th>*/}
                                 </tr>
                               </thead>
                               <tbody>
@@ -323,8 +358,6 @@ export default function Agendamento() {
                                     <td> {evento.marca} </td>
                                     <td> {evento.modelo} </td>
                                     <td> {evento.ano} </td>
-                                    {/*<td ><a href={`/autores/editar/${item.aut_codigo}`} className="btn btn-primary" role="button"> Editar </a></td>
-                  <td ><a href={`/autores/ativar${item.aut_codigo}`} className="btn btn-danger btn-block" role="button"> Ativar </a></td>*/}
                                   </tr>
                                 )
                                 }

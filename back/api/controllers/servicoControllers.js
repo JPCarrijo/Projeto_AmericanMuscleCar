@@ -2,17 +2,18 @@ const db = require('../../config/db')
 
 module.exports = {
   servicoCadastro,
-  servicoInsert
+  servicoInsert,
+  servicoImprimir
 }
 
 function servicoCadastro(require, response) {
-  const placa = require.body.placa
+  //const placa = require.body.placa
   //let placa = ''
-  console.log(placa);
+  //console.log(placa);
 
-  const sqlGet = `SELECT  * FROM  carro where placa = ?`
+  const sqlGet = `SELECT  * FROM  carro`
 
-  db.query(sqlGet, [placa], (err, result) => {
+  db.query(sqlGet, (err, result) => {
  //   placa = result[0].placa;
  //   console.log(placa);
     if(err) throw err
@@ -55,5 +56,18 @@ function servicoInsert(require, response) {
   db.query(sqlPost, [entrada, saida, carroId, placa ,km, descricao1, unitario1, quantidade1, total1, descricao2, unitario2, quantidade2, total2, descricao3, unitario3, quantidade3, total3, descricao4, unitario4, quantidade4, total4, descricao5, unitario5, quantidade5, total5, quantidadetotal, totalsoma], (err, result) => {
     if(err) throw err
     response.json(result)
+  })
+}
+
+function servicoImprimir(require, response) {
+  const id = require.body.carro
+  console.log(`O id é ${id}`);
+  const sqlGet = `SELECT * FROM  servico where servicoId = ?`
+  db.query(sqlGet, [id], (err, result) => {
+    if(err) {
+      console.log(err);
+    } else {
+      response.json(result)
+    }
   })
 }

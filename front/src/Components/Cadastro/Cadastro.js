@@ -157,6 +157,8 @@ export default function Cadastro() {
     setSnack({ ...snack, open: false })
     history.push('/')
   }
+
+
   return (
     <>
       <Snackbar
@@ -208,9 +210,6 @@ export default function Cadastro() {
                           error={error.nome !== ''}
                           helperText={error.nome}
                         />
-                        {/*
-                        <label for="inputAddress2" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}> Nome </label>
-                        <input type="text" className="form-control" id="inputAddress2" name="nome" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
                       <div
                         className="col-md-8"
@@ -228,9 +227,6 @@ export default function Cadastro() {
                           error={error.email !== ''}
                           helperText={error.email}
                         />
-                        {/*
-                        <label for="inputEmail4" style={{ fontWeight: 'bolder', fontStyle: 'oblique' }}> Email </label>
-                        <input type="email" className="form-control" id="inputEmail4" name="email" placeholder="admi@americanmusclecar.com" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
                       <div
                         className="col-md-4"
@@ -248,9 +244,6 @@ export default function Cadastro() {
                           error={error.senha !== ''}
                           helperText={error.senha}
                         />
-                        {/*
-                        <label for="inputPassword4" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}>Senha</label>
-                        <input type="password" className="form-control" id="inputPassword4" placeholder="Mínimo 1 letra + números" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
                       <div
                         className="col-md-3"
@@ -268,9 +261,6 @@ export default function Cadastro() {
                           error={error.cidade !== ''}
                           helperText={error.cidade}
                         />
-                        {/*
-                        <label for="inputCity" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}>Cidade</label>
-                        <input type="text" className="form-control" id="inputCity" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
                       <div
                         className="col-md-3"
@@ -316,12 +306,6 @@ export default function Cadastro() {
                           <MenuItem value="TO"> TO </MenuItem>
                           <MenuItem value="DF"> DF </MenuItem>
                         </TextField>
-                        {/*}
-                        <label for="inputEstado" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}> Estado </label>
-                        <select id="inputEstado" className="form-control" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }}>
-                          <option selected>Escolher...</option>
-                          <option> São Paulo </option>
-                      </select>*/}
                       </div>
                       <div
                         className="col-md-3"
@@ -342,9 +326,6 @@ export default function Cadastro() {
                             error={error.cep !== ''}
                             helperText={error.cep} />}
                         </InputMask>
-                        {/*
-                        <label for="inputCEP" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}> CEP </label>
-                        <input type="text" className="form-control" id="inputCEP" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
                       <div
                         className="col-md-3"
@@ -365,9 +346,6 @@ export default function Cadastro() {
                             error={error.celular !== ''}
                             helperText={error.celular} />}
                         </InputMask>
-                        {/*
-                        <label for="inputCity" style={{ fontWeight: 'bold', fontStyle: 'oblique' }}> Telefone Celular </label>
-                        <input type="text" className="form-control" id="inputCity" style={{ boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)' }} />*/}
                       </div>
                     </div>
                     <div
@@ -388,12 +366,9 @@ export default function Cadastro() {
                           type="button"
                           className="btn btn-dark me-md-6 btn-lg" name="buttonCarro"
                           style={{ fontStyle: 'oblique', fontWeight: 'bold' }}
-                          //data-toggle="modal"
-                          //data-target="#siteModal"
                           onClick={() => {
                             if (validate(cadastro)) {
                               saveData()
-                              //history.push('/')
                             }
                           }
                           }> Salvar </button>
@@ -409,46 +384,6 @@ export default function Cadastro() {
       <footer className="footer navbar-fixed-bottom text-center">
         <p style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 American MuscleCar.com</p>
       </footer>
-      {/* MODAL */}
-      <div
-        className="modal fade"
-        id="siteModal"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        ria-hidden="true">
-        <div
-          className="modal-dialog modal-dialog-centered" role="document"  >
-          <div
-            className="modal-content" >
-            <div
-              className="modal-header"
-              style={{ backgroundColor: 'rgba(6, 36, 21, 0.65)', fontFamily: 'Permanent Marker', color: 'white' }}>
-              <h4
-                className="modal-title h4"
-                id="exampleModalLongTitle" > American MuscleCar </h4>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"><span>&times;</span></button>
-            </div>
-            <div
-              className="modal-body " style={{ fontFamily: 'Kanit' }} >
-              Usuário salvo com sucesso!
-            </div>
-            <div
-              className="modal-footer"
-              style={{ backgroundColor: 'rgba(6, 36, 21, 0.65)', color: 'white' }}>
-              <button
-                type="button"
-                className="btn btn-dark"
-                data-dismiss="modal"
-                style={{ fontStyle: 'oblique', fontWeight: 'bold' }}> Fechar </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   )
 }

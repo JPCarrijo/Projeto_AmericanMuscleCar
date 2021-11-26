@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Nav from '../../img/nav.jpg';
-//import MascaraInput from './MascaraInput'
 import TextField from '@material-ui/core/TextField';
 import InputMask from 'react-input-mask';
 import MenuItem from '@material-ui/core/MenuItem';
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
-//import Button from '@material-ui/core/Button';
-
+import MuiAlert from '@material-ui/core/Alert';
+import { Snackbar } from '@material-ui/core';
 
 // Máscara como objeto
 const formatChars = {
@@ -86,6 +84,12 @@ export default function Cliente() {
     ano: '',
     placa: '',
     km: ''
+  })
+
+  const [snack, setSnack] = useState({
+    open: false,
+    severity: 'success',
+    message: 'Cliente salvo com sucesso.'
   })
 
   const history = useHistory()
@@ -267,23 +271,44 @@ export default function Cliente() {
   }
 
   function saveDataUsuario() {
+    try {
+      axios.post("http://localhost:3001/usuario/insert", {
+        nome: usuario.nome,
+        logradouro: usuario.logradouro,
+        numero: usuario.numero,
+        bairro: usuario.bairro,
+        cidade: usuario.cidade,
+        estado: usuario.estado,
+        cep: usuario.cep,
+        rg: usuario.rg,
+        cpf: usuario.cpf,
+        fixo: usuario.fixo,
+        celular: usuario.celular,
+        civil: usuario.civil,
+      })
+      setSnack({
+        open: true,
+        severity: 'success',
+        message: 'Cliente salvo com sucesso!'
+      })
+    }
+    catch (error) {
+      setSnack({
+        open: true,
+        severity: 'error',
+        message: 'ERRO: ' + error.message
+      })
+    }
+  }
 
-    axios.post("http://localhost:3001/usuario/insert", {
-      nome: usuario.nome,
-      logradouro: usuario.logradouro,
-      numero: usuario.numero,
-      bairro: usuario.bairro,
-      cidade: usuario.cidade,
-      estado: usuario.estado,
-      cep: usuario.cep,
-      rg: usuario.rg,
-      cpf: usuario.cpf,
-      fixo: usuario.fixo,
-      celular: usuario.celular,
-      civil: usuario.civil,
-    }).then(() => {
-      alert("Successful Insert!")
-    })
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  function handleSnack(event, reason) {
+    if (reason === 'clickway') return
+    setSnack({ ...snack, open: false })
+
   }
 
   function handleUsuario() {
@@ -307,17 +332,29 @@ export default function Cliente() {
   }
 
   function saveDataCarro() {
-    axios.post("http://localhost:3001/carro/insert", {
-      codigo: carro.codigo,
-      marca: carro.marca,
-      modelo: carro.modelo,
-      cor: carro.cor,
-      ano: carro.ano,
-      placa: carro.placa,
-      km: carro.km
-    }).then(() => {
-      alert("Successful Insert!")
-    })
+    try {
+      axios.post("http://localhost:3001/carro/insert", {
+        codigo: carro.codigo,
+        marca: carro.marca,
+        modelo: carro.modelo,
+        cor: carro.cor,
+        ano: carro.ano,
+        placa: carro.placa,
+        km: carro.km
+      })
+      setSnack({
+        open: true,
+        severity: 'success',
+        message: 'Cliente salvo com sucesso!'
+      })
+    }
+    catch (error) {
+      setSnack({
+        open: true,
+        severity: 'error',
+        message: 'ERRO: ' + error.message
+      })
+    }
   }
 
   function handleCarro() {
@@ -363,27 +400,85 @@ export default function Cliente() {
       .then((response) => setCar(response))
   }, [])
 
-  
+
   return (
     <>
-      <section className="container-fluid h-100 d-inline-block" style={{ paddingTop: '11.5vh', paddingBottom: '10.2vh', backgroundColor: 'rgba(6, 36, 21, 0.78)', height: '100%' }}>
-        <div className="container py-5 h-100" >
-          <div className="row d-flex justify-content-center align-items-center h-100" >
-            <div className="col col-xl-12" >
-              <div role="main" className="card" style={{ borderRadius: '1rem', boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)', backgroundColor: '  rgba(350, 240, 190, 0.75)', padding: '5vw' }}>
+      <Snackbar
+        open={snack.open}
+        autoHideDuration={6000}
+        onClose={handleSnack}
+      >
+        <Alert
+          onClose={handleSnack}
+          severity={snack.severity}>
+          {snack.message}
+        </Alert>
+      </Snackbar>
+      <section
+        className="container-fluid h-100 d-inline-block"
+        style={{ paddingTop: '11.5vh', paddingBottom: '10.2vh', backgroundColor: 'rgba(6, 36, 21, 0.78)', height: '100%' }}>
+        <div
+          className="container py-5 h-100" >
+          <div
+            className="row d-flex justify-content-center align-items-center h-100" >
+            <div
+              className="col col-xl-12" >
+              <div
+                role="main"
+                className="card" style={{ borderRadius: '1rem', boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)', backgroundColor: '  rgba(350, 240, 190, 0.75)', padding: '5vw' }}>
                 <nav>
-                  <div className="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                    <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" style={{ color: 'black', fontSize: '15pt', fontStyle: 'oblique'}}> Cadastrar Cliente </a>
-                    <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" style={{ color: 'black', fontSize: '15pt', fontStyle: 'oblique' }}> Cadastrar Automóvel </a>
-                    <a className="nav-item nav-link" id="nav-client-tab" data-toggle="tab" href="#nav-client" role="tab" aria-controls="nav-client" aria-selected="false" style={{ color: 'black', fontSize: '15pt', fontStyle: 'oblique' }}> Clientes Cadastrados </a>
-                    <a className="nav-item nav-link" id="nav-car-tab" data-toggle="tab" href="#nav-car" role="tab" aria-controls="nav-car" aria-selected="false" style={{ color: 'black', fontSize: '15pt', fontStyle: 'oblique' }}> Automóveis Cadastrados </a>
+                  <div
+                    className="nav nav-tabs justify-content-center" id="nav-tab"
+                    role="tablist">
+                    <a
+                      className="nav-item nav-link active" id="nav-home-tab"
+                      data-toggle="tab"
+                      href="#nav-home"
+                      role="tab"
+                      aria-controls="nav-home"
+                      aria-selected="true"
+                      style={{ color: 'black', fontSize: '15pt', fontStyle: 'oblique' }}>
+                      Cadastrar Cliente </a>
+                    <a
+                      className="nav-item nav-link" id="nav-profile-tab"
+                      data-toggle="tab"
+                      href="#nav-profile"
+                      role="tab"
+                      aria-controls="nav-profile" aria-selected="false" style={{ color: 'black', fontSize: '15pt', fontStyle: 'oblique' }}> Cadastrar Automóvel </a>
+                    <a
+                      className="nav-item nav-link" id="nav-client-tab"
+                      data-toggle="tab"
+                      href="#nav-client"
+                      role="tab"
+                      aria-controls="nav-client" aria-selected="false"
+                      style={{ color: 'black', fontSize: '15pt', fontStyle: 'oblique' }}>
+                      Clientes Cadastrados </a>
+                    <a
+                      className="nav-item nav-link"
+                      id="nav-car-tab"
+                      data-toggle="tab"
+                      href="#nav-car"
+                      role="tab"
+                      aria-controls="nav-car"
+                      aria-selected="false"
+                      style={{ color: 'black', fontSize: '15pt', fontStyle: 'oblique' }}>
+                      Automóveis Cadastrados </a>
                   </div>
                 </nav>
-                <div className="tab-content" id="nav-tabContent" style={{ marginTop: '4.93vh' }}>
-                  <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" >
+                <div
+                  className="tab-content"
+                  id="nav-tabContent"
+                  style={{ marginTop: '4.93vh' }}>
+                  <div
+                    className="tab-pane fade show active" id="nav-home"
+                    role="tabpanel"
+                    aria-labelledby="nav-home-tab" >
                     <form  >
-                      <div className="row">
-                        <div className="col-md-12" style={{ marginTop: '3vh' }}>
+                      <div
+                        className="row">
+                        <div
+                          className="col-md-12"
+                          style={{ marginTop: '3vh' }}>
                           <TextField
                             id="nome"
                             label="Nome"
@@ -397,7 +492,9 @@ export default function Cliente() {
                             error={errorUsuario.nome !== ''}
                             helperText={errorUsuario.nome} />
                         </div>
-                        <div className="col-md-8" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-8"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="logradouro"
                             label="Logradouro"
@@ -410,7 +507,9 @@ export default function Cliente() {
                             error={errorUsuario.logradouro !== ''}
                             helperText={errorUsuario.logradouro} />
                         </div>
-                        <div className="col-md-4" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-4"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="numero"
                             label="Número"
@@ -423,7 +522,9 @@ export default function Cliente() {
                             error={errorUsuario.numero !== ''}
                             helperText={errorUsuario.numero} />
                         </div>
-                        <div className="col-md-3" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-3"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="bairro"
                             label="Bairro"
@@ -436,7 +537,9 @@ export default function Cliente() {
                             error={errorUsuario.bairro !== ''}
                             helperText={errorUsuario.bairro} />
                         </div>
-                        <div className="col-md-3" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-3"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="cidade"
                             label="Cidade"
@@ -449,7 +552,9 @@ export default function Cliente() {
                             error={errorUsuario.cidade !== ''}
                             helperText={errorUsuario.cidade} />
                         </div>
-                        <div className="col-md-3" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-3"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="estado"
                             label="Estado"
@@ -491,7 +596,9 @@ export default function Cliente() {
                             <MenuItem value="DF"> DF </MenuItem>
                           </TextField>
                         </div>
-                        <div className="col-md-3" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-3"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="cep"
                             label="CEP"
@@ -504,7 +611,9 @@ export default function Cliente() {
                             error={errorUsuario.cep !== ''}
                             helperText={errorUsuario.cep} />
                         </div>
-                        <div className="col-md-4" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-4"
+                          style={{ marginTop: '4vh' }}>
                           <InputMask
                             formatChars={formatChars}
                             mask={rgMask}
@@ -522,7 +631,9 @@ export default function Cliente() {
                               helperText={errorUsuario.rg} />}
                           </InputMask>
                         </div>
-                        <div className="col-md-4" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-4"
+                          style={{ marginTop: '4vh' }}>
                           <InputMask
                             formatChars={formatChars}
                             mask={cpfMask}
@@ -541,7 +652,9 @@ export default function Cliente() {
                               helperText={errorUsuario.cpf} />}
                           </InputMask>
                         </div>
-                        <div className="col-md-4" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-4"
+                          style={{ marginTop: '4vh' }}>
                           <InputMask
                             formatChars={formatChars}
                             mask={fixoMask}
@@ -560,7 +673,9 @@ export default function Cliente() {
                               helperText={errorUsuario.fixo} />}
                           </InputMask>
                         </div>
-                        <div className="col-md-4" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-4"
+                          style={{ marginTop: '4vh' }}>
                           <InputMask
                             formatChars={formatChars}
                             mask={celularMask}
@@ -578,7 +693,9 @@ export default function Cliente() {
                               helperText={errorUsuario.celular} />}
                           </InputMask>
                         </div>
-                        <div className="col-md-4" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-4"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="civil"
                             label="Estado Civil"
@@ -597,20 +714,41 @@ export default function Cliente() {
                           </TextField >
                         </div>
 
-                        <div className="col-sm-6" style={{ paddingTop: '10vh', textAlign: 'center' }}>
-                          <button type="button" className="btn btn-dark me-md-6 btn-lg" name="buttonHome" style={{ fontStyle: 'oblique', fontWeight: 'bold' }}><a href="/home" style={{ textDecoration: 'none', color: 'white' }}> Home </a> </button>
+                        <div
+                          className="col-sm-6"
+                          style={{ paddingTop: '10vh', textAlign: 'center' }}>
+                          <button
+                            type="button"
+                            className="btn btn-dark me-md-6 btn-lg" name="buttonHome"
+                            style={{ fontStyle: 'oblique', fontWeight: 'bold' }}>
+                            <a
+                              href="/home"
+                              style={{ textDecoration: 'none', color: 'white' }}>
+                              Home
+                            </a> </button>
                         </div>
-                        <div className="col-sm-6 " style={{ paddingTop: '10vh', textAlign: 'center' }}>
-                          <button type="button" className="btn btn-dark me-md-6 btn-lg" name="buttonUsuario" style={{ fontStyle: 'oblique', fontWeight: 'bold' }} onClick={handleUsuario}> Salvar </button>
+                        <div
+                          className="col-sm-6 "
+                          style={{ paddingTop: '10vh', textAlign: 'center' }}>
+                          <button
+                            type="button"
+                            className="btn btn-dark me-md-6 btn-lg" name="buttonUsuario"
+                            style={{ fontStyle: 'oblique', fontWeight: 'bold' }}
+                            onClick={handleUsuario}>
+                            Salvar </button>
                         </div>
-
                       </div>
                     </form>
                   </div >
-                  <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <div
+                    className="tab-pane fade"
+                    id="nav-profile"
+                    role="tabpanel" aria-labelledby="nav-profile-tab">
                     <form >
-                      <div className="row ">
-                        <div className="col-md-12">
+                      <div
+                        className="row ">
+                        <div
+                          className="col-md-12">
                           <TextField
                             id="codigo"
                             label="Código do Cliente"
@@ -624,7 +762,9 @@ export default function Cliente() {
                             error={errorCarro.codigo !== ''}
                             helperText={errorCarro.codigo} />
                         </div>
-                        <div className="col-md-6" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-6"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="marca"
                             label="Marca"
@@ -638,7 +778,9 @@ export default function Cliente() {
                             error={errorCarro.marca !== ''}
                             helperText={errorCarro.marca} />
                         </div>
-                        <div className="col-md-6" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-6"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="modelo"
                             label="Modelo"
@@ -652,7 +794,9 @@ export default function Cliente() {
                             error={errorCarro.modelo !== ''}
                             helperText={errorCarro.modelo} />
                         </div>
-                        <div className="col-md-6" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-6"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="cor"
                             label="Cor"
@@ -679,7 +823,9 @@ export default function Cliente() {
                             <MenuItem value="Vermelho">Vermelho</MenuItem>
                           </TextField>
                         </div>
-                        <div className="col-md-6" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-6"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="ano"
                             label="Ano Fabricação"
@@ -692,7 +838,9 @@ export default function Cliente() {
                             {years().map(year => <MenuItem value={year} key={year}>{year}</MenuItem>)}
                           </TextField>
                         </div>
-                        <div className="col-md-6" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-6"
+                          style={{ marginTop: '4vh' }}>
                           <InputMask
                             formatChars={formatChars}
                             mask={placaMask}
@@ -710,7 +858,9 @@ export default function Cliente() {
                               helperText={errorCarro.placa} />}
                           </InputMask>
                         </div>
-                        <div className="col-md-6" style={{ marginTop: '4vh' }}>
+                        <div
+                          className="col-md-6"
+                          style={{ marginTop: '4vh' }}>
                           <TextField
                             id="km"
                             label="KM"
@@ -724,26 +874,58 @@ export default function Cliente() {
                             error={errorCarro.km !== ''}
                             helperText={errorCarro.km} />
                         </div>
-                        <div className="col-sm-6 " style={{ paddingTop: '10vh', textAlign: 'center' }}>
-                          <button type="button" className="btn btn-dark me-md-6 btn-lg" name="buttonVoltar"  onClick={() => history.push(`/home`)}  style={{ fontStyle: 'oblique', fontWeight: 'bold' }}> Home </button>
+                        <div
+                          className="col-sm-6 "
+                          style={{ paddingTop: '10vh', textAlign: 'center' }}>
+                          <button
+                            type="button"
+                            className="btn btn-dark me-md-6 btn-lg" name="buttonVoltar"
+                            onClick={() => history.push(`/home`)} style={{ fontStyle: 'oblique', fontWeight: 'bold' }}> Home </button>
                         </div>
-                        <div className="col-sm-6 " style={{ paddingTop: '10vh', textAlign: 'center' }} >
-                          <button type="button" className="btn btn-dark me-md-6 btn-lg" name="buttonCarro" style={{ fontStyle: 'oblique', fontWeight: 'bold' }} onClick={handleCarro}> Salvar </button>
+                        <div
+                          className="col-sm-6 "
+                          style={{ paddingTop: '10vh', textAlign: 'center' }} >
+                          <button
+                            type="button"
+                            className="btn btn-dark me-md-6 btn-lg" name="buttonCarro"
+                            style={{ fontStyle: 'oblique', fontWeight: 'bold' }}
+                            onClick={handleCarro}>
+                            Salvar </button>
                         </div>
                       </div>
                     </form >
                   </div >
-                  <div className="tab-pane fade" id="nav-client" role="tabpanel" aria-labelledby="nav-client-tab" >
-                    <div className="row" style={{ borderBottom: '1px ridge', paddingBottom: '2vh' }}>
-                      <div className="col-md-12" style={{ minHeight: '50vh' }}>
-                        <div className="row">
-                          <div className="col-md-12" style={{ marginBottom: '2vh' }}>
-                            <button type="button" className="btn btn-dark btn-lg float-right" name="buttonNewClient" style={{ fontStyle: 'oblique', fontWeight: 'bold' }} onClick={newClient}> +Novo Cliente </button>
+                  <div
+                    className="tab-pane fade" id="nav-client" role="tabpanel"
+                    aria-labelledby="nav-client-tab" >
+                    <div
+                      className="row"
+                      style={{ borderBottom: '1px ridge', paddingBottom: '2vh' }}>
+                      <div
+                        className="col-md-12"
+                        style={{ minHeight: '50vh' }}>
+                        <div
+                          className="row">
+                          <div
+                            className="col-md-12"
+                            style={{ marginBottom: '2vh' }}>
+                            <button
+                              type="button"
+                              className="btn btn-dark btn-lg float-right"
+                              name="buttonNewClient"
+                              style={{ fontStyle: 'oblique', fontWeight: 'bold' }}
+                              onClick={newClient}>
+                              +Novo Cliente </button>
                           </div>
-                          <div className="col-md-12">
-                            <table className="table table-hover" style={{fontSize:'17pt'}}>
-                              <thead className="">
-                                <tr style={{ textAlign: 'left' }}>
+                          <div
+                            className="col-md-12">
+                            <table
+                              className="table table-hover"
+                              style={{ fontSize: '17pt' }}>
+                              <thead
+                                className="">
+                                <tr
+                                  style={{ textAlign: 'left' }}>
                                   <th scope="col"> Código </th>
                                   <th scope="col"> Nome </th>
                                   <th scope="col"> Logradouro </th>
@@ -751,7 +933,6 @@ export default function Cliente() {
                                   <th scope="col"> Cep </th>
                                   <th scope="col"> Cidade </th>
                                   <th scope="col"> Fone Celular </th>
-                                  {/*} <th scope="col" style={{}}><a type="button" href="/autores/novo" className="btn btn-secondary btn-lg btn-block" role="button"> Novo Autor </a></th>*/}
                                 </tr>
                               </thead>
                               <tbody>
@@ -764,8 +945,6 @@ export default function Cliente() {
                                     <td> {evento.cep} </td>
                                     <td> {evento.cidade} </td>
                                     <td> {evento.celular} </td>
-                                    {/*<td ><a href={`/autores/editar/${item.aut_codigo}`} className="btn btn-primary" role="button"> Editar </a></td>
-                  <td ><a href={`/autores/ativar${item.aut_codigo}`} className="btn btn-danger btn-block" role="button"> Ativar </a></td>*/}
                                   </tr>
                                 )
                                 }
@@ -776,16 +955,36 @@ export default function Cliente() {
                       </div>
                     </div>
                   </div>
-                  <div className="tab-pane fade" id="nav-car" role="tabpanel" aria-labelledby="nav-car-tab" >
-                    <div className="row" style={{ borderBottom: '1px ridge', paddingBottom: '2vh' }}>
-                      <div className="col-md-12" style={{ minHeight: '50vh' }}>
-                        <div className="row">
-                          <div className="col-md-12" style={{ marginBottom: '2vh' }}>
-                            <button type="button" className="btn btn-dark btn-lg float-right" name="buttonNewClient" style={{ fontStyle: 'oblique', fontWeight: 'bold' }} onClick={newCar}> +Novo Automóvel </button>
+                  <div
+                    className="tab-pane fade"
+                    id="nav-car"
+                    role="tabpanel"
+                    aria-labelledby="nav-car-tab" >
+                    <div
+                      className="row"
+                      style={{ borderBottom: '1px ridge', paddingBottom: '2vh' }}>
+                      <div
+                        className="col-md-12"
+                        style={{ minHeight: '50vh' }}>
+                        <div
+                          className="row">
+                          <div
+                            className="col-md-12"
+                            style={{ marginBottom: '2vh' }}>
+                            <button
+                              type="button"
+                              className="btn btn-dark btn-lg float-right"
+                              name="buttonNewClient"
+                              style={{ fontStyle: 'oblique', fontWeight: 'bold' }}
+                              onClick={newCar}> +Novo Automóvel </button>
                           </div>
-                          <div className="col-md-12">
-                            <table className="table table-hover" style={{fontSize:'17pt'}}>
-                              <thead className="">
+                          <div
+                            className="col-md-12">
+                            <table
+                              className="table table-hover"
+                              style={{ fontSize: '17pt' }}>
+                              <thead
+                                className="">
                                 <tr style={{ textAlign: 'left' }}>
                                   <th scope="col"> Cód. Proprietário </th>
                                   <th scope="col"> Marca </th>
@@ -793,7 +992,7 @@ export default function Cliente() {
                                   <th scope="col"> Ano </th>
                                   <th scope="col"> Placa </th>
                                   <th scope="col"> Cor </th>
-                                  <th scope="col"> Km </th>                                           {/*} <th scope="col" style={{}}><a type="button" href="/autores/novo" className="btn btn-secondary btn-lg btn-block" role="button"> Novo Autor </a></th>*/}
+                                  <th scope="col"> Km </th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -806,8 +1005,6 @@ export default function Cliente() {
                                     <td> {car.placa} </td>
                                     <td> {car.cor} </td>
                                     <td> {car.km} </td>
-                                    {/*<td ><a href={`/autores/editar/${item.aut_codigo}`} className="btn btn-primary" role="button"> Editar </a></td>
-                  <td ><a href={`/autores/ativar${item.aut_codigo}`} className="btn btn-danger btn-block" role="button"> Ativar </a></td>*/}
                                   </tr>
                                 )
                                 }
@@ -820,7 +1017,6 @@ export default function Cliente() {
                   </div>
                 </div >
               </div >
-              {/*</div>*/}
             </div>
           </div>
         </div>
@@ -831,42 +1027,3 @@ export default function Cliente() {
     </>
   )
 }
-
-/*
-<div className="row" style={{ borderBottom: '1px ridge', paddingBottom: '2vh' }}>
-                      <div className="col-md-3">
-                        <TextField
-                          //className=""
-                          id="localizar"
-                          type="text"
-                          label="Localizar Cliente"
-                          variant="standard"
-                          //value={text}
-                          onChange={(srt) => setText(srt)}
-                          fullWidth />
-                      </div >
-                      <div className="col-md-3">
-                        <button className="btn btn-dark" onClick=""> Pesquisar Cliente </button>
-                      </div>
-                      <div className="col-md-3" id="renderCliente">
-                        {evento.map((item) =>
-                          <ul>
-                            <li key={item.usuarioId}>{item.nome}</li>
-                          </ul>
-                        )}
-                      </div>
-                    </div>
-                    */
-
-/*
-<div className="row" style={{ borderBottom: '1px ridge', paddingBottom: '2vh' }}>
-  <div className="col-md-3">
-    <TextField
-      className=""
-      id="localizar"
-      label="Localizar Carro"
-      variant="standard"
-      fullWidth />
-  </div>
-</div>
-*/
