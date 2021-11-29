@@ -743,7 +743,7 @@ export default function Servico() {
                     style={{ border: '1px ridge black', paddingTop: '2vh', paddingBotton: '2vh', backgroundColor: 'rgba(0, 0, 0, 0.42)', paddingTop: '3.5vh', borderRadius: '0 0 0 1rem' }}>
                     <h1
                       className="h1 text-center"
-                      style={{ fontFamily: 'Permanent Marker' }}> American MuscleCar </h1>
+                      style={{ fontFamily: 'Permanent Marker', paddingTop:'1vh' }}> Auto Tech </h1>
                   </div>
                   <div
                     className="col-md-4"
@@ -812,7 +812,7 @@ export default function Servico() {
       <footer
         className="footer navbar-fixed-bottom text-center">
         <p
-          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 American MuscleCar.com</p>
+          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com</p>
       </footer>
     </>
   )

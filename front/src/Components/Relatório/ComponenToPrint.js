@@ -64,8 +64,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               <div
                 className="col-md-8 text-center"
                 style={{ marginTop: '3.5vh' }}>
-                <h4
-                  className="h4"> American MuscleCar </h4>
+                <h3
+                  className="h3"> Auto Tech</h3>
                 <h6> Auto Tech Ltda </h6>
                 <h6> CPNJ: 25.457.785.147/0001-54 </h6>
                 <h6> Ferreira Gomez, 1547 - Jd. Palmeiras - São Paulo </h6>
@@ -177,7 +177,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           </div>
           <footer
             className="footer navbar-fixed-bottom text-center">
-            <p style={{ textAlign: 'center' }}>&copy; 2021 American MuscleCar.com</p>
+            <p style={{ textAlign: 'center' }}>&copy; 2021 Auto Tech.com</p>
           </footer>
         </div>
       </div>

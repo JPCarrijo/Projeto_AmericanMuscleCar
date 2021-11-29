@@ -5,7 +5,7 @@ import Relatorio from '../../img/relatorio.png';
 import Agenda from '../../img/agenda.png';
 import Cadastro from '../../img/cadastro.png';
 import Nota from '../../img/notaFiscal.png';
-import Sobre from '../../img/musclecarsSobre.png';
+import Sobre from '../../img/musclecarsSobre2.png';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import '../../index.css';
 
@@ -174,7 +174,7 @@ export default function Home() {
       <footer
         className="footer navbar-fixed-bottom text-center">
         <p
-          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 American MuscleCar.com</p>
+          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com</p>
       </footer>
     </>
   )

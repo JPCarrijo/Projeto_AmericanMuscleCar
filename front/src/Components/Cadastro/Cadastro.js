@@ -187,7 +187,7 @@ export default function Cadastro() {
                 {/* Nav */}
                 <h1
                   className="col-md-12 text-center h1"
-                  style={{ fontFamily: 'Permanent Marker', fontSize: '40pt', textAlign: 'center', marginTop: '-25px' }}> American MuscleCar
+                  style={{ fontFamily: 'Permanent Marker', fontSize: '40pt', textAlign: 'center', marginTop: '-25px' }}> Auto Tech
                 </h1>
                 <form >
                   <div
@@ -382,7 +382,7 @@ export default function Cadastro() {
         </div>
       </section>
       <footer className="footer navbar-fixed-bottom text-center">
-        <p style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 American MuscleCar.com</p>
+        <p style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com</p>
       </footer>
     </>
   )

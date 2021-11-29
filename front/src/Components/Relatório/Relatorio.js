@@ -70,7 +70,7 @@ export default function Relatorio() {
       <footer
         className="footer navbar-fixed-bottom text-center">
         <p
-          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 American MuscleCar.com</p>
+          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com</p>
       </footer>
     </>
   )

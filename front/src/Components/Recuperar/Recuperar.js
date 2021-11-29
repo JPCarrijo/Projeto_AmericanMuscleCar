@@ -1,5 +1,5 @@
 import React from 'react';
-import cars from '../../img/musclecars.png';
+import cars from '../../img/musclecars2.png';
 
 export default function Recuperar() {
   return (
@@ -59,7 +59,7 @@ export default function Recuperar() {
           <footer
             className="footer navbar-fixed-bottom text-center">
             <p
-              style={{ textAlign: 'center', marginTop: '2.5vh', color: 'white' }}>&copy; 2021 American MuscleCar.com</p>
+              style={{ textAlign: 'center', marginTop: '2.5vh', color: 'white' }}>&copy; 2021 Auto Tech.com</p>
           </footer>
         </div>
       </section>

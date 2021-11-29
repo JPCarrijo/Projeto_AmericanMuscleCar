@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import cars from '../../img/musclecars.png';
+import cars from '../../img/musclecars2.png';
 import TextField from '@material-ui/core/TextField';
 import { FormControl, InputLabel, Input, FilledInput, InputAdornment, IconButton } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
@@ -67,6 +67,7 @@ export default function Login() {
                   <div
                     className="col-md-6 col-lg-5 d-none d-md-block">
                     <img
+                      style={{ borderRadius: '1rem 0 0 1rem' }}
                       src={cars}
                       alt="login form"
                       className="img-fluid"
@@ -76,13 +77,13 @@ export default function Login() {
                     className="col-md-6 col-lg-7 d-flex align-items-center" style={{ marginTop: '3vh' }}>
                     <form >
                       <div
-                        className="d-flex align-items-center mb-3 pb-1">
+                        className="d-flex align-items-right mb-3">
                         <i
-                          className="fas fa-cubes fa-2x me-3"
+                          className="fas fa-cubes fa-2x me-5"
                           style={{ color: '#ff6219' }}></i>
                         <span
-                          className="h1 fw-bold mb-0"
-                          style={{ fontFamily: 'Permanent Marker' }}> American MuscleCar </span>
+                          className="h1 fw-bold mb-0 "
+                          style={{ fontFamily: 'Permanent Marker' }}> Auto Tech </span>
                       </div>
                       <div
                         className="row">
@@ -151,11 +152,11 @@ export default function Login() {
                       <h6
                         className="mb-2 pb-lg-2 h6">
                         <Link
-                          style={{ color: '#393f81' }}
+                          style={{ color: '#393f81', fontFamily: 'Kanit'}}
                           to="/recuperar"> Esqueceu a senha? </Link></h6>
                       <h6
                         className="mb-5 pb-lg-2 h6"
-                        style={{ color: '#393f81' }}>Não tem uma conta?
+                        style={{ color: '#393f81', fontFamily: 'Kanit' }}>Não tem uma conta?
                         <Link to="/cadastro"
                           style={{ color: '#393f81' }}>Registre agora.</Link></h6>
                     </form>
@@ -167,7 +168,7 @@ export default function Login() {
           <footer
             className="footer navbar-fixed-bottom text-center">
             <p
-              style={{ textAlign: 'center', marginTop: '2.5vh', color: 'white' }}>&copy; 2021 American MuscleCar.com</p>
+              style={{ textAlign: 'center', marginTop: '2.5vh', color: 'white' }}>&copy; 2021 Auto Tech.com</p>
           </footer>
         </div>
       </section>

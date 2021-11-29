@@ -29,7 +29,7 @@ export default function Sobre() {
                 <div>
                   <h2
                     className="h2 text-center"
-                    style={{ fontFamily: 'Permanent Marker' }}> Conheça o American MuscleCar </h2>
+                    style={{ fontFamily: 'Permanent Marker' }}> Conheça o Auto Tech </h2>
                 </div>
                 <div
                   className="row">
@@ -82,13 +82,13 @@ export default function Sobre() {
                   <h5
                     className="h5 text-right"
                     style={{ fontFamily: 'Kanit' }}>
-                    Atualmente, o American MuscleCar é uma realidade! Nosso software nasceu em 2021, dentro de uma oficina mecânica, com o objetivo de agilizar e melhorar os processos operacionais e administrativos.<br />
+                    Atualmente, o Auto Tech é uma realidade! Nosso software nasceu em 2021, dentro de uma oficina mecânica, com o objetivo de agilizar e melhorar os processos operacionais e administrativos.<br />
                     Uma plataforma web pensada em ajudar na gestão de empresas do setor de manutenção automotiva. Oferecemos as funcionalidades necessárias para facilitar o processo diário de oficinas. <br />
                     Nossa equipe está disposta a sempre buscar como compromisso a inovação e tecnologia para o mercado onde estamos inseridos.
                     Por isso, a todo momento nos preocupamos com a usabilidade e custo-benefício.</h5>
                   <h3
                     className="h3 text-right"
-                    style={{ fontFamily: 'Kanit', fontWeight: 'bold' }}>Conheça o American MuscleCar, e facilite sua gestão.</h3>
+                    style={{ fontFamily: 'Kanit', fontWeight: 'bold' }}>Conheça o Auto Tech, e facilite sua gestão.</h3>
                 </div>
                 <div
                   className="row">
@@ -132,7 +132,7 @@ export default function Sobre() {
       <footer
         className="footer navbar-fixed-bottom text-center">
         <p
-          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 American MuscleCar.com</p>
+          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com</p>
       </footer>
     </>
   )

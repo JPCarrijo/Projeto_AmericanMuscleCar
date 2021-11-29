@@ -345,7 +345,7 @@ export default function Cliente() {
       setSnack({
         open: true,
         severity: 'success',
-        message: 'Cliente salvo com sucesso!'
+        message: 'Automóvel salvo com sucesso!'
       })
     }
     catch (error) {
@@ -1022,7 +1022,7 @@ export default function Cliente() {
         </div>
       </section>
       <footer className="footer navbar-fixed-bottom text-center">
-        <p style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 American MuscleCar.com</p>
+        <p style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com </p>
       </footer>
     </>
   )

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { useHistory } from 'react-router-dom'
-import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
 import MuiAlert from '@material-ui/core/Alert';
 import { Snackbar } from '@material-ui/core';
+import { useHistory } from 'react-router-dom'
+import { useState } from 'react';
 
 
 const formatChars = {
@@ -375,7 +375,7 @@ export default function Agendamento() {
         </div>
       </section>
       <footer className="footer navbar-fixed-bottom text-center">
-        <p style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 American MuscleCar.com</p>
+        <p style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com</p>
       </footer>
     </>
   )
