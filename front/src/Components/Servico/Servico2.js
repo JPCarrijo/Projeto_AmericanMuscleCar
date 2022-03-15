@@ -7,6 +7,11 @@ import axios from 'axios';
 import { useHistory, useParams } from "react-router";
 import MuiAlert from '@material-ui/core/Alert';
 import { Snackbar } from '@material-ui/core';
+import DatePicker from "react-datepicker";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import br from 'date-fns/locale/pt-BR';
+import "react-datepicker/dist/react-datepicker.css";
+registerLocale('br', br)
 
 const useStyles = makeStyles(() => ({
   label: {
@@ -19,6 +24,20 @@ const useStyles = makeStyles(() => ({
   },
   textfield: {
     textAlign: 'right'
+  },
+  formFieldIn: {
+    textAlign: 'center',
+    fontSize: '15pt',
+    borderRadius: '10px',
+    backgroundColor: 'rgba(350, 240, 190, 0.45)',
+    marginLeft: '10vw'
+  },
+  formFieldOut: {
+    textAlign: 'center',
+    fontSize: '15pt',
+    borderRadius: '10px',
+    backgroundColor: 'rgba(350, 240, 190, 0.45)',
+    marginLeft: '5vw'
   }
 }))
 
@@ -29,8 +48,8 @@ const formatChars = {
 }
 
 const placaMask = 'AAA-9&99'
-const entradaMask = '99/99/9999'
-const saidaMask = '99/99/9999'
+// const entradaMask = '99/99/9999'
+// const saidaMask = '99/99/9999'
 export default function Servico() {
   const classes = useStyles();
 
@@ -40,8 +59,8 @@ export default function Servico() {
 
   const [servico, setServico] = useState({
     id: null,
-    entrada: '',
-    saida: '',
+    // entrada: '',
+    // saida: '',
     carroId: '',
     placa: '',
     km: '',
@@ -69,9 +88,12 @@ export default function Servico() {
     totalsoma: ''
   })
 
+  const [selectDateIn, setSelectDateIn] = useState(null);
+  const [selectDateOut, setSelectDateOut] = useState(null);
+
   const [error, setError] = useState({
-    entrada: '',
-    saida: '',
+    // entrada: '',
+    // saida: '',
     carroId: '',
     placa: '',
     km: '',
@@ -83,6 +105,48 @@ export default function Servico() {
     message: 'Ordem salva com sucesso.'
   })
 
+  const dateFormatAux = (date) => {
+
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + (d.getDate()),
+      year = '' + d.getFullYear();
+    //console.log(d);
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+
+  }
+
+  const dateFormat = (date) => {
+
+    var formatDiaMesAno = dateFormatAux(date);
+    //console.log(formatDiaMesAno);
+    return formatDiaMesAno;
+
+  }
+  console.log(dateFormat(selectDateIn));
+  console.log(dateFormat(selectDateOut));
+
+  function handleDateIn(event) {
+
+    setSelectDateIn(event)
+    //console.log(selectDateIn)
+
+    dateFormat(selectDateIn);
+
+  }
+
+  function handleDateOut(event) {
+
+    setSelectDateOut(event)
+    //console.log(selectDateOut)
+
+    dateFormat(selectDateOut);
+
+  }
+
   function handleChange(event, property) {
     //event.preventDefault();
     const servicoTemp = { ...servico }
@@ -92,7 +156,7 @@ export default function Servico() {
     if (property === 'placa') {
       servicoTemp[property] = event.target.value.toUpperCase()
     }
-    else if ((property === 'entrada') || (property === 'saida') || (property === 'km') || (property === 'carroId')) {
+    else if ((property === 'km') || (property === 'carroId')) {
       servicoTemp[property] = event.target.value
     }
 
@@ -107,24 +171,12 @@ export default function Servico() {
 
   function validate(data) {
     const errorTemp = {
-      entrada: '',
-      saida: '',
       carroId: '',
       placa: '',
       km: '',
     }
 
     let isValid = true
-
-    if (data.entrada.trim() === '' || data.entrada.includes('_')) {
-      errorTemp.entrada = `Insira uma data de entrada`
-      isValid = false
-    }
-
-    if (data.saida.trim() === '' || data.saida.includes('_')) {
-      errorTemp.saida = `Insira uma data de saída`
-      isValid = false
-    }
 
     if (data.carroId.trim() === '' || !Number(data.carroId)) {
       errorTemp.carroId = `Insira o código do veículo`
@@ -152,8 +204,8 @@ export default function Servico() {
   function saveDataServico() {
     try {
       axios.post("http://localhost:3001/servico/insert", {
-        entrada: servico.entrada,
-        saida: servico.saida,
+        entrada: dateFormat(selectDateIn),
+        saida: dateFormat(selectDateOut),
         carroId: servico.carroId,
         placa: servico.placa,
         km: servico.km,
@@ -294,7 +346,8 @@ export default function Servico() {
                       className="row" >
                       <div
                         className="col-md-6">
-                        <InputMask
+
+                        {/* <InputMask
                           formatChars={formatChars}
                           mask={entradaMask}
                           id="entrada"
@@ -308,11 +361,23 @@ export default function Servico() {
                             name="entrada"
                             error={error.entrada !== ''}
                             helperText={error.entrada} />}
-                        </InputMask>
+                        </InputMask> */}
+                        <DatePicker
+                          locale="br"
+                          selected={selectDateIn}
+                          onChange={event => handleDateIn(event)}
+                          className={classes.formFieldIn}
+                          id="entrada"
+                          name="entrada"
+                          placeholderText="Data Entrada"
+                          dateFormat="dd/MM/yyyy"
+                          minDate={new Date()}
+                        />
+
                       </div>
                       <div
                         className="col-md-6">
-                        <InputMask
+                        {/* <InputMask
                           formatChars={formatChars}
                           mask={saidaMask}
                           id="saida"
@@ -326,7 +391,18 @@ export default function Servico() {
                             name="saida"
                             error={error.saida !== ''}
                             helperText={error.saida} />}
-                        </InputMask>
+                        </InputMask> */}
+                        <DatePicker
+                          locale="br"
+                          selected={selectDateOut}
+                          onChange={event => handleDateOut(event)}
+                          className={classes.formFieldOut}
+                          id="saida"
+                          name="saida"
+                          placeholderText="Data Saída"
+                          dateFormat="dd/MM/yyyy"
+                          minDate={new Date()}
+                        />
                       </div>
                     </div>
                   </div>
@@ -743,7 +819,7 @@ export default function Servico() {
                     style={{ border: '1px ridge black', paddingTop: '2vh', paddingBotton: '2vh', backgroundColor: 'rgba(0, 0, 0, 0.42)', paddingTop: '3.5vh', borderRadius: '0 0 0 1rem' }}>
                     <h1
                       className="h1 text-center"
-                      style={{ fontFamily: 'Permanent Marker', paddingTop:'1vh' }}> Auto Tech </h1>
+                      style={{ fontFamily: 'Permanent Marker', paddingTop: '1vh' }}> Auto Tech </h1>
                   </div>
                   <div
                     className="col-md-4"

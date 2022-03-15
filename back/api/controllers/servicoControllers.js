@@ -60,7 +60,7 @@ function servicoInsert(require, response) {
 }
 
 function servicoImprimir(require, response) {
-  const id = require.body.carro
+  const id = require.body.servico
   console.log(`O id é ${id}`);
   const sqlGet = `SELECT * FROM  servico where servicoId = ?`
   db.query(sqlGet, [id], (err, result) => {

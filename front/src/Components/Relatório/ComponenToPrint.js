@@ -10,11 +10,11 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 
   const [evento, setEvento] = useState([])
 
-  const [carro, setCarro] = useState([])
+  const [servico, setServico] = useState([])
 
   const buscaRelatorio = async () => {
     await axios.post(`http://localhost:3001/servico/imprimir`, {
-      carro,
+      servico,
     })
       .then(response => setEvento(response.data))
   }
@@ -36,7 +36,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               variant="standard"
               //value={carro}
               InputProps={{ style: { fontSize: '17pt' } }}
-              onChange={(e) => setCarro(e.target.value)} />
+              onChange={(e) => setServico(e.target.value)} />
             <Button
               variant="contained"
               startIcon={<Search />}
