@@ -30,14 +30,14 @@ const useStyles = makeStyles(() => ({
     fontSize: '15pt',
     borderRadius: '10px',
     backgroundColor: 'rgba(350, 240, 190, 0.45)',
-    marginLeft: '10vw'
+    marginLeft: '10vw',
   },
   formFieldOut: {
     textAlign: 'center',
     fontSize: '15pt',
     borderRadius: '10px',
     backgroundColor: 'rgba(350, 240, 190, 0.45)',
-    marginLeft: '5vw'
+    marginLeft: '5vw',    
   }
 }))
 

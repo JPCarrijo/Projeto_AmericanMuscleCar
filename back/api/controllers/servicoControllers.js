@@ -3,7 +3,8 @@ const db = require('../../config/db')
 module.exports = {
   servicoCadastro,
   servicoInsert,
-  servicoImprimir
+  servicoImprimir,
+  servicoImprimirData
 }
 
 function servicoCadastro(require, response) {
@@ -14,9 +15,9 @@ function servicoCadastro(require, response) {
   const sqlGet = `SELECT  * FROM  carro`
 
   db.query(sqlGet, (err, result) => {
- //   placa = result[0].placa;
- //   console.log(placa);
-    if(err) throw err
+    //   placa = result[0].placa;
+    //   console.log(placa);
+    if (err) throw err
     response.send(result)
   })
 }
@@ -53,21 +54,38 @@ function servicoInsert(require, response) {
 
   const sqlPost = `INSERT INTO servico (dataEntrada, dataSaida, carroId, placa, km, descricao1, valorUnit1, qtd1, valor1, descricao2, valorUnit2, qtd2, valor2, descricao3, valorUnit3, qtd3, valor3, descricao4, valorUnit4, qtd4, valor4, descricao5, valorUnit5, qtd5, valor5, somaqtd, valorTotal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
-  db.query(sqlPost, [entrada, saida, carroId, placa ,km, descricao1, unitario1, quantidade1, total1, descricao2, unitario2, quantidade2, total2, descricao3, unitario3, quantidade3, total3, descricao4, unitario4, quantidade4, total4, descricao5, unitario5, quantidade5, total5, quantidadetotal, totalsoma], (err, result) => {
-    if(err) throw err
+  db.query(sqlPost, [entrada, saida, carroId, placa, km, descricao1, unitario1, quantidade1, total1, descricao2, unitario2, quantidade2, total2, descricao3, unitario3, quantidade3, total3, descricao4, unitario4, quantidade4, total4, descricao5, unitario5, quantidade5, total5, quantidadetotal, totalsoma], (err, result) => {
+    if (err) throw err
     response.json(result)
   })
 }
 
 function servicoImprimir(require, response) {
   const id = require.body.servico
-  console.log(`O id é ${id}`);
+  //console.log(`O id é ${id}`);
   const sqlGet = `SELECT * FROM  servico where servicoId = ?`
   db.query(sqlGet, [id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      response.json(result)
+      //console.log(result);
+    }
+  })
+}
+
+function servicoImprimirData(require, response) {
+  const dataIn = require.body.servico
+  //const idBack = require.params.id
+  console.log(`Esse id é ${dataIn}`);
+  const sqlGet = `SELECT date_format(dataEntrada,'%d/%m/%Y') as data_entrada, date_format(dataSaida,'%d/%m/%Y') as data_saida from servico where servicoId = ?`
+
+  db.query(sqlGet, [dataIn], (err, result) => {
     if(err) {
       console.log(err);
     } else {
       response.json(result)
+      //console.log(result);
     }
   })
 }

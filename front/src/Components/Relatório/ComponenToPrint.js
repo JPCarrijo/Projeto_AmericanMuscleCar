@@ -4,21 +4,45 @@ import { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
-import logo from '../../img/logo_quem_somos.png'
+import logo from '../../img/logo_quem_somos.png';
+import { makeStyles } from "@material-ui/styles";
 
+const useStyles = makeStyles(() => ({
+    th: {
+      textAlign: 'center',
+      width: '33%'
+    },
+    td: {
+      textAlign: 'center',
+      width: '33%'
+    }
+}))
 const ComponentToPrint = React.forwardRef((props, ref) => {
+
+  const classes = useStyles();
 
   const [evento, setEvento] = useState([])
 
   const [servico, setServico] = useState([])
 
+  const [dataIn, setDataIn] = useState([])
+
   const buscaRelatorio = async () => {
     await axios.post(`http://localhost:3001/servico/imprimir`, {
       servico,
     })
+      //.then(response => response.data.dataEntrada)
       .then(response => setEvento(response.data))
+
+    await axios.post(`http://localhost:3001/servico/imprimirdata`, {
+      servico,
+    })
+      //.then(response => response.data.dataEntrada)
+      .then(response => setDataIn(response.data))
   }
+
   console.log(evento);
+  console.log(dataIn);
 
 
   return (
@@ -89,21 +113,45 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             <table
               className="table table-bordered"
               style={{ fontSize: '20pt' }}>
-              <thead>
-                <th scope="col"> Código do Carro </th>
+              {/* <thead>
                 <th scope="col"> Data Entrada </th>
                 <th scope="col"> Data Saída </th>
-                <th scope="col"> Placa </th>
-                <th scope="col"> Km </th>
+              </thead>
+              <tbody>
+                {dataIn.map((item) =>
+                  <tr>
+                    <td scope="row" key={item.id}> {item.data_entrada} </td>
+                    <td> {item.data_saida} </td>
+                  </tr>
+                )}
+              </tbody> */}
+              <thead>
+                <th scope="row" className={classes.th}> Data Entrada </th>
+                <th scope="row" className={classes.th}> Data Saída </th>
+              </thead>
+              <tbody>
+              {dataIn.map((item) =>
+                <>
+                  <td className={classes.td}>{item.data_entrada}</td>
+                  <td className={classes.td}>{item.data_saida}</td>
+                </>
+              )}
+              </tbody>
+            </table>
+            <table
+              className="table table-bordered"
+              style={{ fontSize: '20pt' }}>
+              <thead>
+                <th scope="col" className={classes.th}> Cód. do Carro </th>
+                <th scope="col" className={classes.th}> Placa </th>
+                <th scope="col" className={classes.th}> Km </th>
               </thead>
               <tbody>
                 {evento.map((item) =>
                   <tr>
-                    <th scope="row" style={{ textAlign: 'center' }} key={item.id}> {item.carroId} </th>
-                    <td> {item.dataEntrada} </td>
-                    <td> {item.dataSaida} </td>
-                    <td> {item.placa} </td>
-                    <td> {item.km} </td>
+                    <td scope="row" key={item.id} className={classes.td}> {item.carroId} </td>
+                    <td className={classes.td}> {item.placa} </td>
+                    <td className={classes.td}> {item.km} </td>
                   </tr>
                 )}
               </tbody>
