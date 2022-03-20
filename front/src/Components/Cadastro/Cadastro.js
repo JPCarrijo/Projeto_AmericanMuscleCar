@@ -158,7 +158,6 @@ export default function Cadastro() {
     history.push('/')
   }
 
-
   return (
     <>
       <Snackbar
@@ -173,8 +172,11 @@ export default function Cadastro() {
         </Alert>
       </Snackbar>
       <section
-        className="container-fluid h-100 d-inline-block"
-        style={{ paddingTop: '11.5vh', paddingBottom: '10.2vh', backgroundColor: 'rgba(6, 36, 21, 0.78)', height: '100%' }}>
+        className="vh-100"
+        style={{
+          backgroundColor: 'rgba(6, 36, 21, 0.78)',
+          minHeight: '100vh'
+        }}>
         <div
           className="container py-5 h-100" >
           <div
@@ -182,28 +184,44 @@ export default function Cadastro() {
             <div
               className="col col-xl-12" >
               <div
-                className="card"
-                style={{ borderRadius: '1rem', boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)', backgroundColor: '  rgba(350, 240, 190, 0.75)', padding: '5vw' }}>
+                className="card my-5 py-5"
+                style={{
+                  borderRadius: '1rem',
+                  boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)',
+                  backgroundColor: '  rgba(350, 240, 190, 0.75)',
+                  padding: '5vw'
+                }}>
                 {/* Nav */}
                 <h1
-                  className="col-md-12 text-center h1"
-                  style={{ fontFamily: 'Permanent Marker', fontSize: '40pt', textAlign: 'center', marginTop: '-25px' }}> Auto Tech
+                  className="h1 text-center"
+                  style={{
+                    fontFamily: 'Permanent Marker'
+                  }}> Auto Tech
                 </h1>
+                <h4
+                  className="h4 text-center"
+                  style={{
+                    fontFamily: 'Permanent Marker'
+                  }}> Cadastro de Usuários
+                </h4>
                 <form >
                   <div
                     className="form-group">
                     <div
                       className="row">
                       <div
-                        className="col-md-12"
-                        style={{ marginTop: '5vh' }} >
+                        className="col-md-12 my-2">
                         <TextField
                           id="nome"
                           label="Nome"
                           name="nome"
                           variant="standard"
                           value={cadastro.nome}
-                          InputProps={{ style: { fontSize: '17pt' } }}
+                          InputProps={{
+                            style: {
+                              fontSize: '17pt'
+                            }
+                          }}
                           onChange={handleInputChange}
                           fullWidth
                           required
@@ -212,15 +230,18 @@ export default function Cadastro() {
                         />
                       </div>
                       <div
-                        className="col-md-8"
-                        style={{ marginTop: '5vh' }}>
+                        className="col-md-8 my-2">
                         <TextField
                           id="email"
                           label="E-mail"
                           name="email"
                           variant="standard"
                           value={cadastro.email}
-                          InputProps={{ style: { fontSize: '17pt' } }}
+                          InputProps={{
+                            style: {
+                              fontSize: '17pt'
+                            }
+                          }}
                           onChange={event => handleInputChange(event, 'email')}
                           fullWidth
                           required
@@ -229,15 +250,18 @@ export default function Cadastro() {
                         />
                       </div>
                       <div
-                        className="col-md-4"
-                        style={{ marginTop: '5vh' }}>
+                        className="col-md-4 my-2">
                         <TextField
                           id="senha"
                           label="Senha"
                           name="senha"
                           variant="standard"
                           value={cadastro.senha}
-                          InputProps={{ style: { fontSize: '17pt' } }}
+                          InputProps={{
+                            style: {
+                              fontSize: '17pt'
+                            }
+                          }}
                           onChange={handleInputChange}
                           fullWidth
                           required
@@ -246,15 +270,18 @@ export default function Cadastro() {
                         />
                       </div>
                       <div
-                        className="col-md-3"
-                        style={{ marginTop: '5vh' }}>
+                        className="col-md-3 my-2">
                         <TextField
                           id="cidade"
                           label="Cidade"
                           name="cidade"
                           variant="standard"
                           value={cadastro.cidade}
-                          InputProps={{ style: { fontSize: '17pt' } }}
+                          InputProps={{
+                            style: {
+                              fontSize: '17pt'
+                            }
+                          }}
                           onChange={handleInputChange}
                           fullWidth
                           required
@@ -263,15 +290,18 @@ export default function Cadastro() {
                         />
                       </div>
                       <div
-                        className="col-md-3"
-                        style={{ marginTop: '5vh' }}>
+                        className="col-md-3 my-2">
                         <TextField
                           id="estado"
                           label="Estado"
                           variant="standard"
                           name="estado"
                           value={cadastro.estado}
-                          InputProps={{ style: { fontSize: '17pt' } }}
+                          InputProps={{
+                            style: {
+                              fontSize: '17pt'
+                            }
+                          }}
                           onChange={event => handleInputChange(event, 'estado')}
                           select
                           fullWidth
@@ -308,8 +338,7 @@ export default function Cadastro() {
                         </TextField>
                       </div>
                       <div
-                        className="col-md-3"
-                        style={{ marginTop: '5vh' }}>
+                        className="col-md-3 my-2">
                         <InputMask
                           formatChars={formatChars}
                           mask={cepMask}
@@ -321,15 +350,18 @@ export default function Cadastro() {
                             variant="standard"
                             fullWidth
                             name="cep"
-                            InputProps={{ style: { fontSize: '17pt' } }}
+                            InputProps={{
+                              style: {
+                                fontSize: '17pt'
+                              }
+                            }}
                             required
                             error={error.cep !== ''}
                             helperText={error.cep} />}
                         </InputMask>
                       </div>
                       <div
-                        className="col-md-3"
-                        style={{ marginTop: '5vh' }}>
+                        className="col-md-3 my-2">
                         <InputMask
                           formatChars={formatChars}
                           mask={celularMask}
@@ -341,7 +373,11 @@ export default function Cadastro() {
                             variant="standard"
                             fullWidth
                             name="celular"
-                            InputProps={{ style: { fontSize: '17pt' } }}
+                            InputProps={{
+                              style: {
+                                fontSize: '17pt'
+                              }
+                            }}
                             required
                             error={error.celular !== ''}
                             helperText={error.celular} />}
@@ -349,29 +385,38 @@ export default function Cadastro() {
                       </div>
                     </div>
                     <div
-                      className="row"
-                      style={{ marginTop: '5vh' }}>
+                      className="row my-2">
                       <div
-                        className="col-md-6 d-grid gap-3 d-md-flex justify-content-start" >
+                        className="col-md-6 d-sm-flex justify-content-end" >
                         <Link
                           to="/">
                           <button
                             type="button"
-                            className="btn btn-dark me-md-6 btn-lg" name="buttonVoltar"
-                            style={{ fontStyle: 'oblique', fontWeight: 'bold' }}> Voltar </button></Link>
+                            className="btn btn-dark btn-xl my-2" name="buttonVoltar"
+                            style={{
+                              fontStyle: 'oblique',
+                              fontWeight: 'bold'
+                            }}> Voltar
+                          </button>
+                        </Link>
                       </div>
                       <div
-                        className="col-md-6 d-grid gap-3 d-md-flex justify-content-end" >
+                        className="col-md-6" >
                         <button
                           type="button"
-                          className="btn btn-dark me-md-6 btn-lg" name="buttonCarro"
-                          style={{ fontStyle: 'oblique', fontWeight: 'bold' }}
+                          className="btn btn-dark btn-xl my-2"
+                          name="buttonCarro"
+                          style={{
+                            fontStyle: 'oblique',
+                            fontWeight: 'bold'
+                          }}
                           onClick={() => {
                             if (validate(cadastro)) {
                               saveData()
                             }
                           }
-                          }> Salvar </button>
+                          }> Salvar
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -379,11 +424,19 @@ export default function Cadastro() {
               </div>
             </div>
           </div>
+          <footer
+          className="footer navbar-fixed-bottom text-center">
+          <p
+            style={{
+              textAlign: 'center',
+              color: 'white',
+              marginTop: '2.5vh'
+            }}> &copy; 2022 autotech.com
+          </p>
+        </footer>
         </div>
       </section>
-      <footer className="footer navbar-fixed-bottom text-center">
-        <p style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com</p>
-      </footer>
+
     </>
   )
 }

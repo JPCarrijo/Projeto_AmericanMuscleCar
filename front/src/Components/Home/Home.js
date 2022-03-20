@@ -14,10 +14,10 @@ export default function Home() {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg "
+        className="navbar navbar-expand-lg"
         style={{ backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler "
           type="button"
           data-toggle="collapse"
           data-target="#navbarNav"
@@ -25,10 +25,10 @@ export default function Home() {
           aria-expanded="false"
           aria-label="Alterna navegação">
           <span
-            className="navbar-toggler-icon"></span>
+            className="navbar-toggler-icon" style={{ border: '2px solid', borderRadius: '10px', backgroundColor: 'rgb(6, 65, 21)' }}></span>
         </button>
         <div
-          className="collapse navbar-collapse "
+          className="collapse navbar-collapse"
           id="navbarNav">
           <ul
             className="navbar-nav ml-auto">
@@ -45,137 +45,143 @@ export default function Home() {
         </div>
       </nav>
       <section
-        className="container-fluid"
-        style={{ backgroundColor: 'rgba(6, 36, 21, 0.78)', minHeight: '97.5vh', height: '100%' }}>
+        className="v-100"
+        style={{ backgroundColor: 'rgba(6, 36, 21, 0.78)', height: '100%', minHeight: '100vh' }}>
         <div
-          className="row"
-          style={{ marginLeft: '10vw', paddingTop: '4vh' }}>
-          <div
-            className="col-md-4 my-5" >
-            <Link
-              style={{ textDecoration: 'none', color: 'black' }} to="/cliente2"><div
-                className="card"
-                style={{ border: 'none', borderRadius: '30px', minWidth: '15vw', width: '22vw' }}>
-                <img
-                  src={Cadastro}
-                  className="card-img-top" alt="..."
-                  style={{ borderRadius: '30px' }} />
-                <div
-                  className="card-body" >
-                  <h1
-                    className=" h1 card-title text-center"
-                    style={{ fontFamily: 'Permanent Marker' }}> Cadastro </h1>
-                </div>
-              </div></Link>
+          className="container-fluid h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div
+              className="col-lg-5 my-3" >
+              <Link
+                style={{ textDecoration: 'none', color: 'black' }} to="/cliente2"><div
+                  className="card"
+                  style={{ border: 'none', borderRadius: '30px' }}>
+                  <img
+                    src={Cadastro}
+                    className="card-img-top" alt="..."
+                    style={{ borderRadius: '30px' }} />
+                  <div
+                    className="card-body" >
+                    <h1
+                      className=" h1 card-title text-center"
+                      style={{ fontFamily: 'Permanent Marker' }}> Cadastro </h1>
+                  </div>
+                </div></Link>
+            </div>
+            <div
+              className="col-lg-5 my-3">
+              <Link
+                style={{ textDecoration: 'none', color: 'black' }}
+                to="/servico2"><div
+                  className="card"
+                  style={{ border: 'none', borderRadius: '30px' }}>
+                  <img
+                    src={Servico}
+                    className="card-img-top"
+                    alt="..."
+                    style={{ borderRadius: '30px' }} />
+                  <div
+                    className="card-body">
+                    <h1
+                      className="h1 card-title text-center"
+                      style={{ fontFamily: 'Permanent Marker' }}>
+                      Serviço </h1>
+                  </div>
+                </div></Link>
+            </div>
+            <div
+              className="col-lg-5 my-3" >
+              <Link
+                style={{ textDecoration: 'none', color: 'black' }}
+                to="/agendamento"><div
+                  className="card"
+                  style={{ border: 'none', borderRadius: '30px' }}>
+                  <img
+                    src={Agenda}
+                    className="card-img-top"
+                    alt="..."
+                    style={{ borderRadius: '30px' }} />
+                  <div
+                    className="card-body">
+                    <h1
+                      className=" h1 card-title text-center"
+                      style={{ fontFamily: 'Permanent Marker' }}> Agendamento </h1>
+                  </div>
+                </div></Link>
+            </div>
+            <div
+              className="col-lg-5 my-3">
+              <Link
+                style={{ textDecoration: 'none', color: 'black' }} ><div
+                  className="card"
+                  style={{ border: 'none', borderRadius: '30px' }} >
+                  <img
+                    src={Nota}
+                    className=" h2 card-img-top"
+                    alt="..."
+                    style={{ borderRadius: '30px' }} />
+                  <div
+                    className="card-body">
+                    <h1
+                      className="h1 card-title text-center"
+                      style={{ fontFamily: 'Permanent Marker' }}> Nota Fiscal </h1>
+                  </div>
+                </div></Link>
+            </div>
+            <div
+              className="col-lg-5 my-3">
+              <Link
+                style={{ textDecoration: 'none', color: 'black' }}
+                to="/relatorio"><div
+                  className="card"
+                  style={{ border: 'none', borderRadius: '30px' }}>
+                  <img
+                    src={Relatorio}
+                    className="card-img-top"
+                    alt="..."
+                    style={{ borderRadius: '30px' }} />
+                  <div
+                    className="card-body">
+                    <h1
+                      className="h1 card-title text-center"
+                      style={{ fontFamily: 'Permanent Marker' }}> Relatório </h1>
+                  </div>
+                </div></Link>
+            </div>
+            <div
+              className="col-lg-5 my-3">
+              <Link
+                style={{ textDecoration: 'none', color: 'black' }}
+                to="/sobre"><div
+                  className="card"
+                  style={{ border: 'none', borderRadius: '30px' }}>
+                  <img
+                    src={Sobre}
+                    className="card-img-top"
+                    alt="..."
+                    style={{ borderRadius: '30px' }} />
+                  <div
+                    className="card-body">
+                    <h1
+                      className=" h1 card-title text-center"
+                      style={{ fontFamily: 'Permanent Marker' }}>
+                      Quem Somos </h1>
+                  </div>
+                </div></Link>
+            </div>
           </div>
-          <div
-            className="col-md-4 my-5">
-            <Link
-              style={{ textDecoration: 'none', color: 'black' }}
-              to="/servico2"><div
-                className="card"
-                style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
-                <img
-                  src={Servico}
-                  className="card-img-top"
-                  alt="..."
-                  style={{ borderRadius: '30px' }} />
-                <div
-                  className="card-body">
-                  <h1
-                    className="h1 card-title text-center"
-                    style={{ fontFamily: 'Permanent Marker' }}>
-                    Serviço </h1>
-                </div>
-              </div></Link>
-          </div>
-          <div
-            className="col-md-4 my-5" >
-            <Link
-              style={{ textDecoration: 'none', color: 'black' }}
-              to="/agendamento"><div
-                className="card"
-                style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
-                <img
-                  src={Agenda}
-                  className="card-img-top"
-                  alt="..."
-                  style={{ borderRadius: '30px' }} />
-                <div
-                  className="card-body">
-                  <h1
-                    className=" h1 card-title text-center"
-                    style={{ fontFamily: 'Permanent Marker' }}> Agendamento </h1>
-                </div>
-              </div></Link>
-          </div>
-          <div
-            className="col-md-4 my-5">
-            <Link
-              style={{ textDecoration: 'none', color: 'black' }} ><div
-                className="card"
-                style={{ border: 'none', borderRadius: '30px', width: '22vw' }} >
-                <img
-                  src={Nota}
-                  className=" h2 card-img-top"
-                  alt="..."
-                  style={{ borderRadius: '30px' }} />
-                <div
-                  className="card-body">
-                  <h1
-                    className="h1 card-title text-center"
-                    style={{ fontFamily: 'Permanent Marker' }}> Nota Fiscal </h1>
-                </div>
-              </div></Link>
-          </div>
-          <div
-            className="col-md-4 my-5">
-            <Link
-              style={{ textDecoration: 'none', color: 'black' }}
-              to="/relatorio"><div
-                className="card"
-                style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
-                <img
-                  src={Relatorio}
-                  className="card-img-top"
-                  alt="..."
-                  style={{ borderRadius: '30px' }} />
-                <div
-                  className="card-body">
-                  <h1
-                    className="h1 card-title text-center"
-                    style={{ fontFamily: 'Permanent Marker' }}> Relatório </h1>
-                </div>
-              </div></Link>
-          </div>
-          <div
-            className="col-md-4 my-5">
-            <Link
-              style={{ textDecoration: 'none', color: 'black' }}
-              to="/sobre"><div
-                className="card"
-                style={{ border: 'none', borderRadius: '30px', width: '22vw' }}>
-                <img
-                  src={Sobre}
-                  className="card-img-top"
-                  alt="..."
-                  style={{ borderRadius: '30px' }} />
-                <div
-                  className="card-body">
-                  <h1
-                    className=" h1 card-title text-center"
-                    style={{ fontFamily: 'Permanent Marker' }}>
-                    Quem Somos </h1>
-                </div>
-              </div></Link>
-          </div>
+          <footer
+            className="footer navbar-fixed-bottom text-center">
+            <p
+              style={{ 
+                textAlign: 'center',
+                color: 'white',
+                }}>&copy; 2022 autotech.com.br
+                </p>
+          </footer>
         </div>
       </section>
-      <footer
-        className="footer navbar-fixed-bottom text-center">
-        <p
-          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com</p>
-      </footer>
+
     </>
   )
 }

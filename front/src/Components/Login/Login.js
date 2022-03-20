@@ -63,7 +63,7 @@ export default function Login() {
                 className="card"
                 style={{ borderRadius: '1rem', boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)', marginTop: '-30px' }}>
                 <div
-                  className="row g-0">
+                  className="row">
                   <div
                     className="col-md-6 col-lg-5 d-none d-md-block">
                     <img
@@ -74,23 +74,26 @@ export default function Login() {
                     />
                   </div>
                   <div
-                    className="col-md-6 col-lg-7 d-flex align-items-center" style={{ marginTop: '3vh' }}>
-                    <form >
+                    className="col-md col-lg-6 align-items-center my-4">
+                    <form className="container mx-auto">
                       <div
-                        className="d-flex align-items-right mb-3">
+                        className="align-items-center mb-4">
                         <i
-                          className="fas fa-cubes fa-2x me-5"
+                          className="fas fa-cubes fa-2x"
                           style={{ color: '#ff6219' }}></i>
-                        <span
-                          className="h1 fw-bold mb-0 "
-                          style={{ fontFamily: 'Permanent Marker' }}> Auto Tech </span>
+                        <h1 className="text-center">
+                          <span
+                            className="fw-bold"
+                            style={{ fontFamily: 'Permanent Marker' }}> Auto Tech
+                          </span>
+                        </h1>
                       </div>
                       <div
                         className="row">
                         <div
-                          className="col-md-12"
-                          style={{ marginTop: '2vh' }}>
-                          <FormControl sx={{ width: '45ch' }} variant="standard">
+                          className="col-md-12 ms-3"
+                          style={{ marginTop: '2vw' }}>
+                          <FormControl sx={{ maxWidth: '25vw' }} variant="standard">
                             <TextField
                               id="nome"
                               label="Usuário"
@@ -103,10 +106,10 @@ export default function Login() {
                           </FormControl>
                         </div>
                         <div
-                          className="col-md-12"
-                          style={{ marginTop: '2vh' }}>
+                          className="col-md-12 ms-3"
+                          style={{ marginTop: '2vw' }}>
                           <FormControl
-                            sx={{ width: '25ch' }} variant="standard"
+                            sx={{ width: '25vw' }} variant="standard"
                           >
                             <InputLabel
                               htmlFor="standard-adornment-password"
@@ -137,25 +140,28 @@ export default function Login() {
                       </div>
                       <div >
                         <h4
-                          lassName="h4"
-                          style={{ fontFamily: 'Kanit', marginTop: '3vh', color: 'red' }}> {loginStatus} </h4>
+                          className="h4 pt-3 ms-3"
+                          style={{ fontFamily: 'Kanit', color: 'red' }}> {loginStatus} </h4>
                       </div>
                       <div
-                        className="pt-1 mb-4">
+                        className="pt-3 mb-5 ">
                         <button
                           type="button"
-                          className="btn btn-dark me-md-6 btn-lg" name="buttonLogin"
-                          style={{ fontStyle: 'oblique', fontWeight: 'bold', marginTop: '3vh' }}
+                          className="col-12 btn btn-dark btn-xl" name="buttonLogin"
+                          style={{
+                            fontStyle: 'oblique',
+                            fontWeight: 'bold',
+                          }}
                           onClick={handleSubmit}
                         > Login </button>
                       </div>
                       <h6
                         className="mb-2 pb-lg-2 h6">
                         <Link
-                          style={{ color: '#393f81', fontFamily: 'Kanit'}}
+                          style={{ color: '#393f81', fontFamily: 'Kanit' }}
                           to="/recuperar"> Esqueceu a senha? </Link></h6>
                       <h6
-                        className="mb-5 pb-lg-2 h6"
+                        className="mb-3 pb-lg-2 h6"
                         style={{ color: '#393f81', fontFamily: 'Kanit' }}>Não tem uma conta?
                         <Link to="/cadastro"
                           style={{ color: '#393f81' }}>Registre agora.</Link></h6>
@@ -168,7 +174,12 @@ export default function Login() {
           <footer
             className="footer navbar-fixed-bottom text-center">
             <p
-              style={{ textAlign: 'center', marginTop: '2.5vh', color: 'white' }}>&copy; 2021 Auto Tech.com</p>
+              style={{
+                textAlign: 'center',
+                marginTop: '2.5vh',
+                color: 'white'
+              }}>&copy; 2022 autotech.com
+            </p>
           </footer>
         </div>
       </section>
