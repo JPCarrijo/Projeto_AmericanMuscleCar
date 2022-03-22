@@ -5,13 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-}
-
-body {
   height: 99vh;
   background-image: url('./img/OficinaHomePage.jpg');
   background-attachment: fixed;
+
 }
 
 code {

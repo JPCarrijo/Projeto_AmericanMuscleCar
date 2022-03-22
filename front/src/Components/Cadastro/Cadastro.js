@@ -189,7 +189,7 @@ export default function Cadastro() {
                   borderRadius: '1rem',
                   boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)',
                   backgroundColor: '  rgba(350, 240, 190, 0.75)',
-                  padding: '5vw'
+                  padding: '2vw'
                 }}>
                 {/* Nav */}
                 <h1
@@ -431,7 +431,7 @@ export default function Cadastro() {
               textAlign: 'center',
               color: 'white',
               marginTop: '2.5vh'
-            }}> &copy; 2022 autotech.com
+            }}> &copy; 2022 autotech.com.br
           </p>
         </footer>
         </div>

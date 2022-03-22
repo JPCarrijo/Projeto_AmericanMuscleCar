@@ -16,47 +16,62 @@ export default function Relatorio() {
   return (
     <>
       <section
-        className="container-fluid h-100 d-inline-block"
-        style={{ paddingTop: '11.5vh', paddingBottom: '16.5vh', backgroundColor: 'rgba(6, 36, 21, 0.78)', height: '100%' }}>
+        className="container-fluid h-100"
+        style={{ backgroundColor: 'rgba(6, 36, 21, 0.78)'}}
+        >
         <div
-          className="container py-5 h-100" >
+          className="container py-5">
           <div
             className="row d-flex justify-content-center align-items-center h-100" >
             <div
               className="col col-xl-12" >
               <div
                 role="main"
-                className="card"
-                style={{ borderRadius: '1rem', boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)', backgroundColor: '  rgba(350, 240, 190, 0.75)', padding: '5vw' }}>
+                className="card my-5 py-5"
+                style={{
+                  borderRadius: '1rem',
+                  boxShadow: '10px 12px 15px rgba(3, 1, 0, 0.69)',
+                  backgroundColor: '  rgba(350, 240, 190, 0.75)',
+                  padding: '2vw'
+                }}>
                 <div>
-                  <h2 className="h2"
-                    style={{ marginLeft: '1vw', fontFamily: 'Kanit' }}> Insira o nº da Ordem: </h2>
+                  <h4
+                    className="h4 mx-1"
+                    style={{
+                      fontFamily: 'Kanit'
+                    }}> Insira o nº da Ordem:
+                  </h4>
                 </div>
                 <div
-                  className="col-md-12 "
-                >
+                  className="col-md-12"style={{height: '100%'}} >
                   <ComponentToPrint
                     ref={componentRef} />
                 </div>
                 <div
-                  className="row">
+                  className="row my-2">
                   <div
-                    className="col-md-6 text-center" >
+                    className="col-md-6 d-sm-flex justify-content-end" >
                     <button
                       type="button"
-                      className="btn btn-dark me-md-6 btn-lg" name="buttonHome"
+                      className="btn btn-dark btn-xl my-2" name="buttonHome"
                       onClick={() => history.push(`/home`)}
-                      style={{ fontStyle: 'oblique', fontWeight: 'bold' }}>
+                      style={{
+                        fontStyle: 'oblique',
+                        fontWeight: 'bold'
+                      }}>
                       Home
                     </button>
                   </div>
                   <div
-                    className="col-md-6 text-center">
+                    className="col-md-6">
                     <button
                       type="button"
-                      className="btn btn-dark me-md-6 btn-lg me-auto"
+                      className="btn btn-dark btn-xl my-2"
                       name="buttonImprimir"
-                      style={{ fontStyle: 'oblique', fontWeight: 'bold' }}
+                      style={{
+                        fontStyle: 'oblique',
+                        fontWeight: 'bold'
+                      }}
                       onClick={handlePrint}>
                       Imprimir
                     </button>
@@ -64,14 +79,17 @@ export default function Relatorio() {
                 </div>
               </div>
             </div>
-          </div>
+          </div>          
         </div>
+        <footer
+            className="footer navbar-fixed-bottom text-center">
+            <p
+              style={{
+                textAlign: 'center',
+                color: 'white',
+              }}>&copy; 2022 autotech.com.br</p>
+          </footer>
       </section>
-      <footer
-        className="footer navbar-fixed-bottom text-center">
-        <p
-          style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba(6, 36, 21, 0.78)' }}>&copy; 2021 Auto Tech.com</p>
-      </footer>
     </>
   )
 }

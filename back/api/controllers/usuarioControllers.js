@@ -35,14 +35,14 @@ function usuarioInsert(require, response) {
   const cidade = require.body.cidade;
   const estado = require.body.estado;
   const cep = require.body.cep;
-  const rg = require.body.rg;
+  //const rg = require.body.rg;
   const cpf = require.body.cpf;
   const fixo = require.body.fixo;
   const celular = require.body.celular;
-  const civil = require.body.civil;
+  //const civil = require.body.civil;
 
-  const sqlInsert = "INSERT INTO usuario (nome,logradouro,numero,bairro,cidade,estado,cep,rg,cpf,fixo,celular,civil) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-  db.query(sqlInsert, [nome, logradouro, numero, bairro, cidade, estado, cep, rg, cpf, fixo, celular, civil], (err, result) => {
+  const sqlInsert = "INSERT INTO usuario (nome,logradouro,numero,bairro,cidade,estado,cep,cpf,fixo,celular) VALUES (?,?,?,?,?,?,?,?,?,?)";
+  db.query(sqlInsert, [nome, logradouro, numero, bairro, cidade, estado, cep, cpf, fixo, celular], (err, result) => {
     if (err) {
       throw err;
     }

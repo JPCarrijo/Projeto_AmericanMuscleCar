@@ -178,7 +178,7 @@ export default function Login() {
                 textAlign: 'center',
                 marginTop: '2.5vh',
                 color: 'white'
-              }}>&copy; 2022 autotech.com
+              }}>&copy; 2022 autotech.com.br
             </p>
           </footer>
         </div>

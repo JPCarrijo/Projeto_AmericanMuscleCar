@@ -3,7 +3,7 @@ const db = require('../../config/db')
 
 module.exports = {
   agendaGetAll,
-  agendaInsert
+  agendaInsert,
 }
 
 function agendaGetAll(require, response) {
@@ -11,7 +11,7 @@ function agendaGetAll(require, response) {
   //const id = require.params.id
   //let model = ''
 
-  const sqlGet = `SELECT * FROM agendamento`;
+  const sqlGet = `SELECT id, date_format(dataAgendamento, '%d/%m/%Y') AS dataAgendamento, nome, cpf, email, marca, modelo, ano FROM agendamento`;
 
   db.query(sqlGet, (err, result) => {
     //model = result[0].dataAgendamento
@@ -20,9 +20,9 @@ function agendaGetAll(require, response) {
       throw err
     } else {
       response.send(result)
+      console.log(result);
     }
   })
-  
 }
 
 function agendaInsert(require, response) {

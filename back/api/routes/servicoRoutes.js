@@ -7,4 +7,4 @@ server.post('/servico/insert', controllersServico.servicoInsert);
 
 server.post('/servico/imprimir', controllersServico.servicoImprimir);
 
-server.post('/servico/imprimirdata', controllersServico.servicoImprimirData);
+//server.post('/servico/imprimirdata', controllersServico.servicoImprimirData);
