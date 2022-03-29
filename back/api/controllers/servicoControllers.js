@@ -23,7 +23,7 @@ function servicoCadastro(require, response) {
 }
 
 function servicoInsert(require, response) {
-  console.log("Rota Seerviço Encontrada!");
+  console.log("Rota Serviço Encontrada!");
   const entrada = require.body.entrada;
   const saida = require.body.saida;
   const carroId = require.body.carroId;
@@ -51,10 +51,13 @@ function servicoInsert(require, response) {
   const total5 = require.body.total5;
   const quantidadetotal = require.body.quantidadetotal;
   const totalsoma = require.body.totalsoma;
+  const pagamento = require.body.pagamento
 
-  const sqlPost = `INSERT INTO servico (dataEntrada, dataSaida, carroId, placa, km, descricao1, valorUnit1, qtd1, valor1, descricao2, valorUnit2, qtd2, valor2, descricao3, valorUnit3, qtd3, valor3, descricao4, valorUnit4, qtd4, valor4, descricao5, valorUnit5, qtd5, valor5, somaqtd, valorTotal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+  console.log(total1);
 
-  db.query(sqlPost, [entrada, saida, carroId, placa, km, descricao1, unitario1, quantidade1, total1, descricao2, unitario2, quantidade2, total2, descricao3, unitario3, quantidade3, total3, descricao4, unitario4, quantidade4, total4, descricao5, unitario5, quantidade5, total5, quantidadetotal, totalsoma], (err, result) => {
+  const sqlPost = `INSERT INTO servico (dataEntrada, dataSaida, carroId, placa, km, descricao1, valorUnit1, qtd1, valor1, descricao2, valorUnit2, qtd2, valor2, descricao3, valorUnit3, qtd3, valor3, descricao4, valorUnit4, qtd4, valor4, descricao5, valorUnit5, qtd5, valor5, somaqtd, valorTotal, pagamento) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+
+  db.query(sqlPost, [entrada, saida, carroId, placa, km, descricao1, unitario1, quantidade1, total1, descricao2, unitario2, quantidade2, total2, descricao3, unitario3, quantidade3, total3, descricao4, unitario4, quantidade4, total4, descricao5, unitario5, quantidade5, total5, quantidadetotal, totalsoma, pagamento], (err, result) => {
     if (err) throw err
     response.json(result)
   })
@@ -64,7 +67,7 @@ function servicoImprimir(require, response) {
   const id = require.body.servico
   //console.log(`O id é ${id}`);
   //const sqlGet = `SELECT * FROM  servico where servicoId = ?`
-  const sqlGet = `SELECT id, date_format(dataEntrada,'%d/%m/%Y') as data_entrada, date_format(dataSaida,'%d/%m/%Y') as data_saida, carroId, placa, km, descricao1, valorUnit1, qtd1, valor1, descricao2, valorUnit2, qtd2, valor2,descricao3, valorUnit3, qtd3, valor3, descricao4, valorUnit4, qtd4, valor4,descricao5, valorUnit5, qtd5, valor5, somaqtd, valorTotal FROM servico`
+  const sqlGet = `SELECT id, date_format(dataEntrada,'%d/%m/%Y') as data_entrada, date_format(dataSaida,'%d/%m/%Y') as data_saida, carroId, placa, km, descricao1, valorUnit1, qtd1, valor1, descricao2, valorUnit2, qtd2, valor2,descricao3, valorUnit3, qtd3, valor3, descricao4, valorUnit4, qtd4, valor4,descricao5, valorUnit5, qtd5, valor5, somaqtd, valorTotal FROM servico WHERE id = ${id}`
   db.query(sqlGet, [id], (err, result) => {
     if (err) {
       console.log(err);

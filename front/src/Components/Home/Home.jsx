@@ -53,7 +53,7 @@ export default function Home() {
             <div
               className="col-lg-5 my-3" >
               <Link
-                style={{ textDecoration: 'none', color: 'black' }} to="/cliente2"><div
+                style={{ textDecoration: 'none', color: 'black' }} to="/cliente"><div
                   className="card"
                   style={{ border: 'none', borderRadius: '30px' }}>
                   <img
@@ -72,7 +72,7 @@ export default function Home() {
               className="col-lg-5 my-3">
               <Link
                 style={{ textDecoration: 'none', color: 'black' }}
-                to="/servico2"><div
+                to="/servico"><div
                   className="card"
                   style={{ border: 'none', borderRadius: '30px' }}>
                   <img

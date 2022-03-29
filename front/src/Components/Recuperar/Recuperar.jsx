@@ -40,7 +40,8 @@ export default function Recuperar() {
                           style={{ fontFamily: 'Permanent Marker' }}>
                           Recuperar senha</span>
                       </div>
-                      <div className="form-outline mb-4">
+                      <div 
+                      className="form-outline mb-4">
                         <input
                           type="email" id="form2Example17" className="form-control form-control-lg" style={{ width: '27vw' }} />
                         <label className="form-label" for="form2Example17">E-mail</label>

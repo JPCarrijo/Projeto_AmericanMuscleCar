@@ -35,7 +35,7 @@ export default function ListaCarros() {
 
   //console.log(listaCarros);
   function voltarServico() {
-    history.push('/servico2')
+    history.push('/servico')
   }
 
   const carroRow: GridColDef[] = [

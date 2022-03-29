@@ -10,11 +10,38 @@ import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles(() => ({
   th: {
     textAlign: 'center',
-    width: '33%'
+    width: '33%',
+    fontSize: '16pt'
   },
   td: {
     textAlign: 'center',
-    width: '33%'
+    width: '33%',
+    fontSize: '14pt'
+  },
+  thdescricao: {
+    textAlign: 'left',
+    width: '60%',
+    fontSize: '16pt'
+  },
+  thdescricaosoma: {
+    textAlign: 'left',
+    width: '73.1%',
+    fontSize: '16pt'
+  },
+  th2: {
+    textAlign: 'left',
+    width: '13%',
+    fontSize: '16pt'
+  },
+  thdescricao2: {
+    textAlign: 'left',
+    width: '60%',
+    fontSize: '14pt'
+  },
+  td2: {
+    textAlign: 'right',
+    width: '13%',
+    fontSize: '14pt'
   },
   h1: {
     fontSize: 'clamp(0.5em, 0.5em + 1vw, 1em)',
@@ -128,14 +155,16 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
         {/* </div>
            </div> */}
         <div
-          className="col-md-12"
+          className="col-md-12 pt-3"
           style={{
-            fontFamily: 'Kanit', paddingTop: '5vh', border: '1px groove'
+            fontFamily: 'Kanit',
+            border: '2px groove black',
+            borderRadius: '15px'
           }}>
           <table
-            className="table table-bordered"
+            className="table table-hover"
             style={{
-              fontSize: '14pt'
+              fontSize: '16pt'
             }}>
             {/* <thead>
                 <th scope="col"> Data Entrada </th>
@@ -151,41 +180,40 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               </tbody> */}
             <thead>
               <th
-                scope="row"
+                scope="col"
                 className={classes.th}> Data Entrada </th>
               <th
-                scope="row"
+                scope="col"
                 className={classes.th}> Data Saída </th>
             </thead>
             <tbody>
               {evento.map((item) =>
                 <>
-                  <td
-                    className={classes.td}>{item.data_entrada}
-                  </td>
-                  <td
-                    className={classes.td}>{item.data_saida}
-                  </td>
+                  <tr>
+                    <td
+                      scope="row"
+                      className={classes.td}>{item.data_entrada} </td>
+                    <td
+                      scope="row"
+                      className={classes.td}>{item.data_saida} </td>
+                  </tr>
                 </>
               )}
             </tbody>
           </table>
           <table
-            className="table table-bordered"
-            style={{ fontSize: '14pt' }}>
+            className="table table-hover"
+            style={{ fontSize: '16pt' }}>
             <thead>
               <th
                 scope="col"
-                className={classes.th}> Cód. do Carro
-              </th>
-              <th s
-                cope="col"
-                className={classes.th}> Placa
-              </th>
+                className={classes.th}> Cód. do Carro </th>
               <th
                 scope="col"
-                className={classes.th}> Km
-              </th>
+                className={classes.th}> Placa </th>
+              <th
+                scope="col"
+                className={classes.th}> Km </th>
             </thead>
             <tbody>
               {evento.map((item) =>
@@ -193,120 +221,118 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                   <td
                     scope="row"
                     key={item.id}
-                    className={classes.td}> {item.carroId}
-                  </td>
-                  <td className={classes.td}> {item.placa}
-                  </td>
-                  <td className={classes.td}> {item.km}
-                  </td>
+                    className={classes.td}> {item.carroId} </td>
+                  <td
+                    scope="row"
+                    className={classes.td}> {item.placa} </td>
+                  <td
+                    scope="row"
+                    className={classes.td}> {item.km} </td>
                 </tr>
               )}
             </tbody>
           </table>
           <table
-            className="table table-bordered"
-            style={{ fontSize: '14pt' }}>
+            className="table table-hover">
             <thead>
               <th
-                scope="col"> Descrição
-              </th>
+                scope="col"
+                className={classes.thdescricao}> Descrição  </th>
               <th
-                scope="col"> Unit.
-              </th>
+                scope="col"
+                className={classes.th2}> Unitário </th>
               <th
-                scope="col"> Quant.
-              </th>
+                scope="col"
+                className={classes.th2}> Quant. </th>
               <th
-                scope="col"> Valor
-              </th>
+                scope="col"
+                className={classes.th2}> Valor </th>
             </thead>
             <tbody>
               {evento.map((item) =>
                 <tr>
-                  <th
+                  <td
                     scope="row"
-                    style={{
-                      textAlign: 'left',
-                      width: '60%'
-                    }}> {item.descricao1}
-                  </th>
-                  <td> {item.valorUnit1}
-                  </td>
-                  <td> {item.qtd1}
-                  </td>
-                  <td> {item.valor1}
-                  </td>
+                    className={classes.thdescricao2}> {item.descricao1} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valorUnit1} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.qtd1} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valor1} </td>
+                </tr>
+              )}
+              {evento.map((item) =>
+                <tr>
+                  <td
+                    scope="row"
+                    className={classes.thdescricao2}> {item.descricao2} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valorUnit2} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.qtd2} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valor2} </td>
                 </tr>
               )}
               {evento.map((item) =>
                 <tr>
                   <th
                     scope="row"
-                    style={{ textAlign: 'left', width: '60%' }}> {item.descricao2}
-                  </th>
-                  <td> {item.valorUnit2}
-                  </td>
-                  <td> {item.qtd2}
-                  </td>
-                  <td> {item.valor2}
-                  </td>
+                    className={classes.thdescricao2}> {item.descricao3} </th>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valorUnit3} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.qtd3} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valor3} </td>
                 </tr>
               )}
               {evento.map((item) =>
                 <tr>
                   <th
                     scope="row"
-                    style={{
-                      textAlign: 'left',
-                      width: '60%'
-                    }}> {item.descricao3}
-                  </th>
-                  <td> {item.valorUnit3}
-                  </td>
-                  <td> {item.qtd3}
-                  </td>
-                  <td> {item.valor3}
-                  </td>
+                    className={classes.thdescricao2}> {item.descricao4} </th>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valorUnit4} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.qtd4} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valor4} </td>
                 </tr>
               )}
               {evento.map((item) =>
                 <tr>
-                  <th
+                  <td
                     scope="row"
-                    style={{
-                      textAlign: 'left',
-                      width: '60%'
-                    }}> {item.descricao4}
-                  </th>
-                  <td> {item.valorUnit4}
-                  </td>
-                  <td> {item.qtd4}
-                  </td>
-                  <td> {item.valor4}
-                  </td>
-                </tr>
-              )}
-              {evento.map((item) =>
-                <tr>
-                  <th
+                    className={classes.thdescricao2}> {item.descricao5} </td>
+                  <td
                     scope="row"
-                    style={{
-                      textAlign: 'left',
-                      width: '60%'
-                    }}> {item.descricao5}
-                  </th>
-                  <td> {item.valorUnit5}
-                  </td>
-                  <td> {item.qtd5}
-                  </td>
-                  <td> {item.valor5}
-                  </td>
+                    className={classes.td2}> {item.valorUnit5} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.qtd5} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valor5} </td>
                 </tr>
               )}
             </tbody>
           </table>
           <table
-            className="table table-bordered"
+            className="table table-hover"
             style={{
               fontSize: '14pt'
             }}>
@@ -315,18 +341,17 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 <tr>
                   <th
                     scope="row"
-                    style={{ textAlign: 'left', width: '60%' }}> Soma Total
+                    className={classes.thdescricaosoma}> Soma Total
                   </th>
-                  <td
+                  {/* <td
                     style={{ width: '13.3%' }}>
-                  </td>
+                  </td> */}
                   <td
-                    style={{
-                      width: '13.5%'
-                    }}> {item.somaqtd}
-                  </td>
-                  <td > {item.valorTotal}
-                  </td>
+                    scope="row"
+                    className={classes.td2}> {item.somaqtd} </td>
+                  <td
+                    scope="row"
+                    className={classes.td2}> {item.valorTotal} </td>
                 </tr>
               )}
             </tbody>

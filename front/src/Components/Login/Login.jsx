@@ -109,7 +109,7 @@ export default function Login() {
                           className="col-md-12 ms-3"
                           style={{ marginTop: '2vw' }}>
                           <FormControl
-                            sx={{ width: '25vw' }} variant="standard"
+                            sx={{ width: '20vw' }} variant="standard"
                           >
                             <InputLabel
                               htmlFor="standard-adornment-password"
