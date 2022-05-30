@@ -4,16 +4,24 @@ import InputMask from 'react-input-mask';
 import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
 import MuiAlert from '@material-ui/core/Alert';
-import { Snackbar } from '@material-ui/core';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Snackbar from '@mui/material/Snackbar';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom'
 import { useState } from 'react';
 import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from "@material-ui/styles";
+import '../Agendamento/variables.css';
 import DatePicker from "react-datepicker";
-import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { registerLocale } from "react-datepicker";
 import br from 'date-fns/locale/pt-BR';
-import "react-datepicker/dist/react-datepicker.css";
 registerLocale('br', br)
 
 const useStyles = makeStyles(() => ({
@@ -30,15 +38,28 @@ const useStyles = makeStyles(() => ({
   },
   paper: {
     border: '1px solid',
-    boxShadow: '0 0 2em black'
+    boxShadow: '0 0 2em black',
   },
   formFieldIn: {
     textAlign: 'center',
     fontSize: '12pt',
     borderRadius: '5px',
     backgroundColor: 'rgba(350, 240, 190, 0.45)',
-    //marginLeft: '4vw',
   },
+  dialog: {
+    '& .MuiDialog-paper': {
+      backgroundColor: 'rgb(72,72,72)',
+      width: '25vw',
+      color: 'white',
+      borderRadius: '15px',
+    },
+    '& .MuiDialogContentText-root': {
+      color: 'white'
+    },
+    '& .MuiButton-text': {
+      color: '#00FF00'
+    }
+  }
 }))
 
 
@@ -47,30 +68,33 @@ const formatChars = {
 }
 
 const cpfMask = '999.999.999-99'
-const dataMask = '99/99/9999'
 export default function Agendamento() {
 
   const classes = useStyles();
 
-  const history = useHistory()
+  const history = useHistory();
 
-  const [evento, setEvento] = useState([])
+  const [evento, setEvento] = useState([]);
+
+  const [open, setOpen] = useState(false);
+
+  const [dialog, setDialog] = useState(false);
+
+  const [delAgenda, setDelAgenda] = useState();
 
   const [agenda, setAgenda] = useState({
     id: null,
-    //data: '',
     nome: '',
     cpf: '',
     email: '',
     marca: '',
     modelo: '',
     ano: (new Date()).getFullYear()
-  })
+  });
 
-  const [selectDate, setSelectDate] = useState(null);
+  const [selectDate, setSelectDate] = useState(new Date());
 
   const [error, setError] = useState({
-    //data: '',
     nome: '',
     cpf: '',
     email: '',
@@ -101,7 +125,6 @@ export default function Agendamento() {
   }
   const validate = (data) => {
     const errorTemp = {
-      //data: '',
       nome: '',
       cpf: '',
       email: '',
@@ -111,11 +134,6 @@ export default function Agendamento() {
     }
 
     let isValid = true
-
-    // if (data.data.trim() === '' || data.data.includes('_')) {
-    //   errorTemp.data = `Insira uma data!`
-    //   isValid = false
-    // }
 
     if (data.nome.trim() === '') {
       errorTemp.nome = `Insira um nome`
@@ -149,7 +167,6 @@ export default function Agendamento() {
     const result = []
     for (let i = (new Date()).getFullYear(); i >= 1970; i--)  result.push(i)
     return result
-    //console.log(result);
   }
 
   const saveAgendamento = async () => {
@@ -176,6 +193,7 @@ export default function Agendamento() {
         message: 'ERRO: ' + error.message
       })
     }
+    getData()
   }
 
   const dateFormatAux = (date) => {
@@ -184,7 +202,7 @@ export default function Agendamento() {
       month = '' + (d.getMonth() + 1),
       day = '' + (d.getDate()),
       year = '' + d.getFullYear();
-    //console.log(d);
+
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
 
@@ -195,16 +213,13 @@ export default function Agendamento() {
   const dateFormat = (date) => {
 
     var formatDiaMesAno = dateFormatAux(date);
-    //console.log(formatDiaMesAno);
     return formatDiaMesAno;
 
   }
-  console.log(dateFormat(selectDate));
 
   function handleDate(event) {
 
     setSelectDate(event)
-    //console.log(selectDateIn)
 
     dateFormat(selectDate);
 
@@ -222,8 +237,8 @@ export default function Agendamento() {
   const handleAgenda = () => {
     if (validate(agenda)) {
       saveAgendamento()
+      setSelectDate(new Date())
       setAgenda({
-        data: '',
         nome: '',
         cpf: '',
         email: '',
@@ -234,13 +249,57 @@ export default function Agendamento() {
     }
   }
 
-  useEffect(() => {
+  async function deleteAgenda() {
+    try {
+      await axios.delete(`http://localhost:3001/agenda/delete/${delAgenda}`)
+      getData();
+
+      setSnack({
+        open: true,
+        severity: 'success',
+        message: 'Agendamento excluído com sucesso!'
+      })
+    }
+    catch (error) {
+      setSnack({
+        open: true,
+        severity: 'error',
+        message: 'ERRO: ' + error.message
+      })
+    }
+    setOpen(true)
+  }
+
+  const getData = () => {
     fetch(`http://localhost:3001/agenda/listar`)
       .then((response) => response.json())
       .then((response) => setEvento(response))
+  }
 
+  useEffect(() => {
+    setTimeout(() => getData(), 1000)
   }, [])
-  console.log(evento);
+
+  function handleDelete(id) {
+    setDelAgenda(id)
+    setDialog(true)
+  }
+
+  const handleDialogClose = (result) => {
+    setDialog(false);
+    if (result) deleteAgenda()
+  }
+
+  const handleClose = () => {
+    if (agenda) setDialog(false)
+  }
+
+  const handleSnackClose = (event, reason) => { // fecha Snack do evento delete
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false)
+  }
 
   function novoAgend() {
     document.getElementById('nav-home-tab').click()
@@ -300,15 +359,63 @@ export default function Agendamento() {
       //flex: true,
       sortComparator: (v1, v2) => Number(v1) > Number(v2) ? 1 : -1
     },
+    {
+      field: 'excluir',
+      headerName: 'Excluir',
+      align: 'center',
+      headerAlign: 'center',
+      width: 135,
+      //flex: true,
+      renderCell: params => (
+        <IconButton aria-label="excluir" onClick={() => handleDelete(params.id)}>
+          <DeleteRoundedIcon color="error" />
+        </IconButton>
+      )
+    }
   ]
 
   return (
     <>
+    <Dialog
+      className={classes.dialog}
+      open={dialog}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description">
+      <DialogTitle
+        id="alert-dialog-title">
+        {"Exclusão de Agendamento"}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText
+          id="alert-dialog-description">
+          Deseja excluir o agendamento?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={handleClose}> Não
+        </Button>
+        <Button
+          onClick={handleDialogClose}
+          autoFocus> Sim
+        </Button>
+      </DialogActions>
+    </Dialog>
       <Snackbar
         open={snack.open}
         autoHideDuration={6000}
-        onClose={handleSnack}
-      >
+        onClose={handleSnackClose}>
+        <Alert
+          onClose={handleSnackClose}
+          severity={snack.severity}>
+          {snack.message}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={snack.open}
+        autoHideDuration={6000}
+        onClose={handleSnack}>
         <Alert
           onClose={handleSnack}
           severity={snack.severity}>
@@ -316,12 +423,12 @@ export default function Agendamento() {
         </Alert>
       </Snackbar>
       <section
-        className="vh-100"
+        className="vh-100 sectionHome"
         style={{
           backgroundColor: 'rgba(6, 36, 21, 0.78)',
         }}>
         <div
-          className="container py-5 h-100" >
+          className="container h-100" >
           <div
             className="row d-flex justify-content-center align-items-center h-100" >
             <div
@@ -345,7 +452,8 @@ export default function Agendamento() {
                       data-toggle="tab"
                       href="#nav-home"
                       role="tab"
-                      aria-controls="nav-home" aria-selected="true"
+                      aria-controls="nav-home"
+                      aria-selected="true"
                       style={{
                         color: 'black',
                         fontSize: '15pt',
@@ -357,7 +465,8 @@ export default function Agendamento() {
                       data-toggle="tab"
                       href="#nav-agenda"
                       role="tab"
-                      aria-controls="nav-agenda" aria-selected="false"
+                      aria-controls="nav-agenda"
+                      aria-selected="false"
                       style={{
                         color: 'black',
                         fontSize: '15pt',
@@ -369,8 +478,10 @@ export default function Agendamento() {
                 <div
                   className="tab-content"
                   id="nav-tabContent">
-                  <div className="tab-pane fade show active" id="nav-home"
-                    role="tabpanel" aria-labelledby="nav-home-tab" >
+                  <div
+                    className="tab-pane fade show active" id="nav-home"
+                    role="tabpanel"
+                    aria-labelledby="nav-home-tab" >
                     <form  >
                       <div className="row">
                         <div className="col-md-12 my-3">
@@ -378,35 +489,12 @@ export default function Agendamento() {
                             <DatePicker
                               locale="br"
                               selected={selectDate}
-                              onChange={event => handleDate(event)}
+                              onChange={(event) => handleDate(event)}
                               className={classes.formFieldIn}
                               id="entrada"
                               name="entrada"
-                              placeholderText="Data Entrada"
                               dateFormat="dd/MM/yyyy"
-                              minDate={new Date()}
-                            />
-                            {/* <InputMask
-                              formatChars={formatChars}
-                              mask={dataMask}
-                              id="data"
-                              value={agenda.data}
-                              onChange={e => handleChange(e, 'data')}>
-                              {() => <TextField
-                                label="Data"
-                                variant="standard"
-                                InputProps={{
-                                  style: {
-                                    fontSize: '12pt'
-                                  }
-                                }}
-                                fullWidth
-                                name="data"
-                                required
-                                error={error.data !== ''}
-                                helperText={error.data}
-                              />}
-                            </InputMask> */}
+                              minDate={new Date()} />
                           </div>
                         </div>
                         <div className="col-md-6 my-2">
@@ -463,7 +551,6 @@ export default function Agendamento() {
                             }}
                             value={agenda.email}
                             onChange={handleChange}
-                            //defaultValue="juca@gmail.com.br"
                             fullWidth
                             required
                             error={error.email !== ''}
@@ -591,8 +678,7 @@ export default function Agendamento() {
                           </div>
                           <Paper
                             className={classes.paper}
-                            elevation={50}
-                          >
+                            elevation={50}>
                             <DataGrid
                               className={classes.dataGrid}
                               rows={evento}
@@ -601,35 +687,6 @@ export default function Agendamento() {
                               autoHeight={true}
                               disableSelectionOnClick={true} />
                           </Paper>
-                          {/* <div className="col-md-12">
-                            <table className="table table-hover" style={{ fontSize: '17pt' }}>
-                              <thead className="">
-                                <tr style={{ textAlign: 'left' }}>
-                                  <th scope="col"> Código </th>
-                                  <th scope="col"> Data </th>
-                                  <th scope="col"> Nome </th>
-                                  <th scope="col"> CPF </th>
-                                  <th scope="col"> Marca </th>
-                                  <th scope="col"> Modelo </th>
-                                  <th scope="col"> Ano </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {evento.map((evento) =>
-                                  <tr style={{ textAlign: 'left' }}>
-                                    <th scope="row" key={evento.id} style={{ textAlign: 'center' }}> {evento.agendaId} </th>
-                                    <td> {evento.dataAgendamento} </td>
-                                    <td> {evento.nome} </td>
-                                    <td> {evento.cpf} </td>
-                                    <td> {evento.marca} </td>
-                                    <td> {evento.modelo} </td>
-                                    <td> {evento.ano} </td>
-                                  </tr>
-                                )
-                                }
-                              </tbody>
-                            </table>
-                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -638,7 +695,7 @@ export default function Agendamento() {
               </div>
             </div>
           </div>
-          <footer
+          {/* <footer
             className="footer navbar-fixed-bottom text-center">
             <p
               style={{
@@ -647,7 +704,7 @@ export default function Agendamento() {
                 marginTop: '2.5vh'
               }}>&copy; 2022 autotech.com.br
             </p>
-          </footer>
+          </footer> */}
         </div>
       </section>
     </>

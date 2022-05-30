@@ -5,7 +5,9 @@ module.exports = {
   usuarioCadastro,
   usuarioGetAll,
   usuarioInsert,
-  usuarioLocalizar
+  usuarioLocalizar,
+  usuarioUpdate,
+  usuarioDelete
 }
 
 function usuarioCadastro(require, response) {
@@ -14,19 +16,18 @@ function usuarioCadastro(require, response) {
 }
 
 function usuarioGetAll(require, response) {
-  
+
   const sqlGet = `SELECT * FROM usuario `;
   db.query(sqlGet, (err, result) => {
-    if(err) {
+    if (err) {
       throw err;
-    }  
+    }
     response.send(result)
   })
 }
 
 function usuarioInsert(require, response) {
   console.log("Rota Insert Encontrada!!!");
-  //response.json("Rota Insert Encontrada!!!")
 
   const nome = require.body.nome;
   const logradouro = require.body.logradouro;
@@ -35,27 +36,64 @@ function usuarioInsert(require, response) {
   const cidade = require.body.cidade;
   const estado = require.body.estado;
   const cep = require.body.cep;
-  //const rg = require.body.rg;
   const cpf = require.body.cpf;
   const fixo = require.body.fixo;
   const celular = require.body.celular;
-  //const civil = require.body.civil;
 
   const sqlInsert = "INSERT INTO usuario (nome,logradouro,numero,bairro,cidade,estado,cep,cpf,fixo,celular) VALUES (?,?,?,?,?,?,?,?,?,?)";
   db.query(sqlInsert, [nome, logradouro, numero, bairro, cidade, estado, cep, cpf, fixo, celular], (err, result) => {
     if (err) {
       throw err;
     }
-     response.json(result)
+    response.json(result)
   })
 }
 
 function usuarioLocalizar(require, response) {
-  const text = require.params.nome
-  console.log(text);
-  const sqlGet = `SELECT * FROM usuario where nome = ${text}`;
-  db.query(sqlGet, text, (err, result) => {
-    if(err) throw err
-    response.send(result)  
+  const id = require.params.id
+  console.log(`Localizar: ${id}`);
+
+  const sqlGet = `SELECT * FROM usuario WHERE id = ${id}`;
+  db.query(sqlGet, id, (err, result) => {
+
+    if (err) throw err
+    response.json(result[0])
+    console.log(result);
+  })
+}
+
+function usuarioUpdate(require, response) {
+  console.log("Rota UpDate Encontrada!!!");
+
+  const id = require.params.id;
+  const nome = require.body.nome;
+  const logradouro = require.body.logradouro;
+  const numero = require.body.numero;
+  const bairro = require.body.bairro;
+  const cidade = require.body.cidade;
+  const estado = require.body.estado;
+  const cep = require.body.cep;
+  const cpf = require.body.cpf;
+  const fixo = require.body.fixo;
+  const celular = require.body.celular;
+
+  const sqlPut = "UPDATE usuario SET nome = ?, logradouro = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, cep = ?, cpf = ?, fixo = ?, celular = ? WHERE id = ?";
+  db.query(sqlPut, [nome, logradouro, numero, bairro, cidade, estado, cep, cpf, fixo, celular, id], (err, result) => {
+    if (err) {
+      throw err;
+    }
+    response.json(result)
+  })
+}
+
+function usuarioDelete(require, response) {
+  const id = require.params.id
+  console.log(id);
+  const sqlDelete = `DELETE FROM usuario WHERE id = ${id}`;
+
+  db.query(sqlDelete, id, (err, result) => {
+    if (err) throw err
+    response.send(result)
+    console.log(result);
   })
 }

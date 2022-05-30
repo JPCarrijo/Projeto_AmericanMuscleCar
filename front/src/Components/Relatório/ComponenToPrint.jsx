@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
 import logo from '../../img/logo_quem_somos.png';
 import { makeStyles } from "@material-ui/styles";
+import { useHistory } from "react-router-dom";
+import { TableBody } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   th: {
@@ -53,47 +55,40 @@ const useStyles = makeStyles(() => ({
 }))
 const ComponentToPrint = React.forwardRef((props, ref) => {
 
+  const history = useHistory();
+
   const classes = useStyles();
 
-  const [evento, setEvento] = useState([])
+  const [evento, setEvento] = useState([]);
 
-  const [servico, setServico] = useState([])
-
-  //const [dataIn, setDataIn] = useState([])
+  const [servico, setServico] = useState([]);
 
   const buscaRelatorio = async () => {
     await axios.post(`http://localhost:3001/servico/imprimir`, {
       servico,
     })
-      //.then(response => response.data.dataEntrada)
       .then(response => setEvento(response.data))
-
-    // await axios.post(`http://localhost:3001/servico/imprimirdata`, {
-    //   servico,
-    // })
-    //   //.then(response => response.data.dataEntrada)
-    //   .then(response => setDataIn(response.data))
   }
 
-  console.log(evento);
-  //console.log(dataIn);
-
+  const listaServico = () => {
+    history.push('/listaservicos')
+  }
 
   return (
     <>
       <div
-        className="container-fluid">
+        className="row container-fluid">
         <div
-          className="col-md-4">
+          className="col-md-3">
           <TextField
             id="codigo"
             label="Número da Ordem"
             aria-label="Search"
             variant="standard"
-            //value={carro}
             InputProps={{
               style: {
-                fontSize: '14pt'
+                fontSize: '14pt',
+                width: '10vw'
               }
             }}
             onChange={(e) => setServico(e.target.value)} />
@@ -103,29 +98,42 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             onClick={buscaRelatorio}
           />
         </div>
-        {/* <div
-            className="col-md-6">
-          </div> */}
+        <div
+          className="col-md-6">
+          <button
+            type="button"
+            className="btn btn-dark btn-xl float-left"
+            name="buttonUsuario"
+            style={{
+              fontStyle: 'oblique',
+              fontWeight: 'bold'
+            }}
+            onClick={listaServico}>
+            Lista Serviços
+          </button>
+        </div>
       </div>
       <div
-        className={classes.container} ref={ref}>
-        {/* <div
-            className="col-md-12"
-            style={{
-              fontFamily: 'Kanit'
-            }}> 
-            <div
-              className="row"> */}
+        className={classes.container}
+        ref={ref}>
         <div
-          className="row g-3" style={{ paddingLeft: '2vw', paddingRight: '25vw' }}>
+          className="row" style={{
+            paddingLeft: '2vw',
+            paddingRight: '25vw'
+          }}>
           <div
-            className="col-md-12 img py-4 mx-3">
+            className="col-md-12 img py-4 mx-1">
             <img
               src={logo}
               className="figure-img img-fluid rounded float-start"
-              width="250vw" alt="Responsive image" style={{ border: '1px inset' }} />
+              width="200vw"
+              alt=""
+              style={{
+                border: '1px'
+              }} />
             <h5
-              className={classes.h1}> Auto Tech
+              className={classes.h1}>
+              Auto Tech
             </h5>
             <p className={classes.h1}>
               Auto Tech Ltda <br></br>
@@ -144,16 +152,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               (16) 98674-4512
             </p>
           </div>
-          {/* <div
-            className="col-md-3 img py-5">
-            <img
-              src={logo}
-              className="figure-img img-fluid rounded float-end"
-              width="180vw" alt="Responsive image" />
-          </div> */}
         </div>
-        {/* </div>
-           </div> */}
         <div
           className="col-md-12 pt-3"
           style={{
@@ -166,36 +165,30 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             style={{
               fontSize: '16pt'
             }}>
-            {/* <thead>
-                <th scope="col"> Data Entrada </th>
-                <th scope="col"> Data Saída </th>
-              </thead>
-              <tbody>
-                {dataIn.map((item) =>
-                  <tr>
-                    <td scope="row" key={item.id}> {item.data_entrada} </td>
-                    <td> {item.data_saida} </td>
-                  </tr>
-                )}
-              </tbody> */}
             <thead>
               <th
                 scope="col"
-                className={classes.th}> Data Entrada </th>
+                className={classes.th}>
+                Data Entrada
+              </th>
               <th
                 scope="col"
-                className={classes.th}> Data Saída </th>
+                className={classes.th}>
+                Data Saída
+              </th>
             </thead>
             <tbody>
               {evento.map((item) =>
                 <>
                   <tr>
                     <td
-                      scope="row"
-                      className={classes.td}>{item.data_entrada} </td>
+                      className={classes.td}>
+                      {item.data_entrada}
+                    </td>
                     <td
-                      scope="row"
-                      className={classes.td}>{item.data_saida} </td>
+                      className={classes.td}>
+                      {item.data_saida}
+                    </td>
                   </tr>
                 </>
               )}
@@ -203,31 +196,42 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           </table>
           <table
             className="table table-hover"
-            style={{ fontSize: '16pt' }}>
+            style={{
+              fontSize: '16pt'
+            }}>
             <thead>
               <th
                 scope="col"
-                className={classes.th}> Cód. do Carro </th>
+                className={classes.th}>
+                Cód. do Carro
+              </th>
               <th
                 scope="col"
-                className={classes.th}> Placa </th>
+                className={classes.th}>
+                Placa
+              </th>
               <th
                 scope="col"
-                className={classes.th}> Km </th>
+                className={classes.th}>
+                Km
+              </th>
             </thead>
             <tbody>
               {evento.map((item) =>
                 <tr>
                   <td
-                    scope="row"
                     key={item.id}
-                    className={classes.td}> {item.carroId} </td>
+                    className={classes.td}>
+                    {item.carroId}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td}> {item.placa} </td>
+                    className={classes.td}>
+                    {item.placa}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td}> {item.km} </td>
+                    className={classes.td}>
+                    {item.km}
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -237,96 +241,124 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             <thead>
               <th
                 scope="col"
-                className={classes.thdescricao}> Descrição  </th>
+                className={classes.thdescricao}>
+                Descrição
+              </th>
               <th
                 scope="col"
-                className={classes.th2}> Unitário </th>
+                className={classes.th2}>
+                Unitário
+              </th>
               <th
                 scope="col"
-                className={classes.th2}> Quant. </th>
+                className={classes.th2}>
+                Quant.
+              </th>
               <th
                 scope="col"
-                className={classes.th2}> Valor </th>
+                className={classes.th2}>
+                Valor
+              </th>
             </thead>
             <tbody>
               {evento.map((item) =>
                 <tr>
                   <td
-                    scope="row"
-                    className={classes.thdescricao2}> {item.descricao1} </td>
+                    className={classes.thdescricao2}>
+                    {item.descricao1}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.valorUnit1} </td>
+                    className={classes.td2}>
+                    {item.valorUnit1}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.qtd1} </td>
+                    className={classes.td2}>
+                    {item.qtd1}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.valor1} </td>
+                    className={classes.td2}>
+                    {item.valor1}
+                  </td>
                 </tr>
               )}
               {evento.map((item) =>
                 <tr>
                   <td
-                    scope="row"
-                    className={classes.thdescricao2}> {item.descricao2} </td>
+                    className={classes.thdescricao2}>
+                    {item.descricao2}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.valorUnit2} </td>
+                    className={classes.td2}>
+                    {item.valorUnit2}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.qtd2} </td>
+                    className={classes.td2}>
+                    {item.qtd2}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.valor2} </td>
-                </tr>
-              )}
-              {evento.map((item) =>
-                <tr>
-                  <th
-                    scope="row"
-                    className={classes.thdescricao2}> {item.descricao3} </th>
-                  <td
-                    scope="row"
-                    className={classes.td2}> {item.valorUnit3} </td>
-                  <td
-                    scope="row"
-                    className={classes.td2}> {item.qtd3} </td>
-                  <td
-                    scope="row"
-                    className={classes.td2}> {item.valor3} </td>
-                </tr>
-              )}
-              {evento.map((item) =>
-                <tr>
-                  <th
-                    scope="row"
-                    className={classes.thdescricao2}> {item.descricao4} </th>
-                  <td
-                    scope="row"
-                    className={classes.td2}> {item.valorUnit4} </td>
-                  <td
-                    scope="row"
-                    className={classes.td2}> {item.qtd4} </td>
-                  <td
-                    scope="row"
-                    className={classes.td2}> {item.valor4} </td>
+                    className={classes.td2}>
+                    {item.valor2}
+                  </td>
                 </tr>
               )}
               {evento.map((item) =>
                 <tr>
                   <td
-                    scope="row"
-                    className={classes.thdescricao2}> {item.descricao5} </td>
+                    className={classes.thdescricao2}>
+                    {item.descricao3}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.valorUnit5} </td>
+                    className={classes.td2}>
+                    {item.valorUnit3}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.qtd5} </td>
+                    className={classes.td2}>
+                    {item.qtd3}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.valor5} </td>
+                    className={classes.td2}>
+                    {item.valor3}
+                  </td>
+                </tr>
+              )}
+              {evento.map((item) =>
+                <tr>
+                  <td
+                    className={classes.thdescricao2}>
+                    {item.descricao4}
+                  </td>
+                  <td
+                    className={classes.td2}>
+                    {item.valorUnit4}
+                  </td>
+                  <td
+                    className={classes.td2}>
+                    {item.qtd4}
+                  </td>
+                  <td
+                    className={classes.td2}>
+                    {item.valor4}
+                  </td>
+                </tr>
+              )}
+              {evento.map((item) =>
+                <tr>
+                  <td
+                    className={classes.thdescricao2}>
+                    {item.descricao5}
+                  </td>
+                  <td
+                    className={classes.td2}>
+                    {item.valorUnit5}
+                  </td>
+                  <td
+                    className={classes.td2}>
+                    {item.qtd5}
+                  </td>
+                  <td
+                    className={classes.td2}>
+                    {item.valor5}
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -340,18 +372,18 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               {evento.map((item) =>
                 <tr>
                   <th
-                    scope="row"
-                    className={classes.thdescricaosoma}> Soma Total
+                    scope="col"
+                    className={classes.thdescricaosoma}>
+                    Soma Total
                   </th>
-                  {/* <td
-                    style={{ width: '13.3%' }}>
-                  </td> */}
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.somaqtd} </td>
+                    className={classes.td2}>
+                    {item.somaqtd}
+                  </td>
                   <td
-                    scope="row"
-                    className={classes.td2}> {item.valorTotal} </td>
+                    className={classes.td2}>
+                    {item.valorTotal}
+                  </td>
                 </tr>
               )}
             </tbody>

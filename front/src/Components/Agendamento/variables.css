@@ -1,0 +1,21 @@
+.react-datepicker {
+  background-color: #707274;
+  color: #969eac;
+  font-size: 1rem;
+  font-family: 'Arial'
+
+  .react-datepicker__month {
+    padding: 1rem 0;
+  }
+
+  .react-datepicker__month-text {
+    display: inline-block;
+    width: 7rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+    padding: 0.5rem;
+    &:hover {
+      background-color: #534cea;
+    }
+  }
+}

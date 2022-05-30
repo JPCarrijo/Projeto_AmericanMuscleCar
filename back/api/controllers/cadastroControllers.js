@@ -22,7 +22,6 @@ function cadastroGetAll(require, response) {
 
 function cadastroInsert(require, response) {
   console.log("Rota Cadastro Insert Encontrada!!!");
-  //response.json("Rota Insert Encontrada!!!")
 
   const nome = require.body.nome;
   const email = require.body.email;

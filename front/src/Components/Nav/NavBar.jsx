@@ -7,10 +7,18 @@ export default function Navbar() {
     <>
       <div
         className="img-fluid"
-        style={{ backgroundColor: 'rgba(6, 36, 21, 0.78)', height: '15vh' }}>
+        style={{
+          backgroundColor: 'rgba(6, 36, 21, 0.78)',
+          height: '15vh'
+        }}>
         <img
           src={logo}
-          style={{ height: '14vh', width: '15vw', paddingLeft: '3vw', paddingTop: '2vh' }} />
+          style={{
+            height: '14vh',
+            width: '15vw',
+            paddingLeft: '3vw',
+            paddingTop: '2vh'
+          }} />
       </div>
     </>
   )

@@ -1,9 +1,9 @@
-const db = require('../../config/db')
+// const db = require('../../config/db')
 
-module.exports = {
-  getAllUser,
-}
+// module.exports = {
+//   getAllUser,
+// }
 
-function getAllUser(callback) {
-  db.query(`select * from users`, callback);
-}
+// function getAllUser(callback) {
+//   db.query(`select * from users`, callback);
+// }

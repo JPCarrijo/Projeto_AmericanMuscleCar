@@ -1,0 +1,81 @@
+.grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bloco {
+  width: 30rem;
+}
+.navbar {
+  grid-area: navbar;
+  background-color: rgba(0, 3, 10, 0.9);
+}
+.sectionHome {
+  grid-area: sectionHome;
+  background-color: rgba(6, 36, 21, 0.5)
+}
+.aside {
+  grid-area: aside;
+  background-color: rgba(0, 3, 10, 0.9);
+  font-size: 1.2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+aside a {
+  color: #fff;
+  text-decoration: none;
+  padding: 1rem;
+  margin-top: 10px;
+}
+.aside a:hover {
+  color: #fff;
+  background: linear-gradient(to right, #3d462e, #686602);
+  border-radius: 0 25px 25px 0;
+  text-decoration: none;
+}
+aside a i {
+  margin-right: 5px;
+}
+.rodape {
+  grid-area: rodape;
+  background-color: rgba(241, 237, 236, 0.99);
+  color: rgb(5, 5, 5);
+  font-size: 1.2em;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+.home {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 80px 1fr 30px;
+  grid-template-columns: 200px 1fr;
+  grid-template-areas:
+    "navbar navbar"
+    "aside sectionHome"
+    "rodape rodape";
+}
+@media(max-width: 768px) {
+  .home {
+    grid-template-rows: 100px 200px 1fr 30px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "navbar"
+      "aside"
+      "sectionHome"
+      "rodape";
+  }
+}
+aside.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+aside.logo img{
+  padding: 0 25px;
+  width: 100%;
+  height: 70px;
+}
